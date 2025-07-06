@@ -1,0 +1,61 @@
+@use "sass:color";
+@use "../mixins";
+@use "../variables";
+
+.account-menu-icon {
+  $size: 35px;
+  height: $size;
+  width: $size;
+  font-size: 18px;
+  background-color: variables.$darkSecondaryBg;
+  transition: background-color variables.$animationSpeed;
+  color: #ffffff;
+  border-radius: var(--border-radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover:not(:disabled), &:active:not(:disabled) {
+    background-color: color.adjust(variables.$darkSecondaryBg, $lightness: 5%);
+  }
+}
+
+account-menu {
+  position: absolute;
+  display: none;
+  right: 0;
+  top: variables.$toolbarHeight;
+  background-color: var(--dropdown-menu-background-color);
+  color: var(--color);
+  border-radius: var(--border-radius);
+  box-shadow: 0 0 15px var(--shadow-color);
+  padding: 10px;
+  width: 250px;
+  z-index: 1000;
+
+  &.open {
+    display: block;
+  }
+
+  .account-menu-link {
+    display: block;
+    color: var(--color);
+    padding: 5px 10px;
+    border-radius: var(--border-radius);
+    font-size: .92em;
+
+    @include mixins.hoverActiveBackgrounds;
+  }
+
+  .account-menu-username {
+    font-weight: 700;
+    font-size: 1.1em;
+    margin-bottom: 10px;
+  }
+
+  .account-menu-divider {
+    margin: 10px 0;
+    height: 1px;
+    background-color: var(--border-color);
+  }
+}

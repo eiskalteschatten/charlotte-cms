@@ -1,0 +1,8 @@
+@use "variables";
+
+.header {
+  height: variables.$toolbarHeight;
+  background-color: #000000;
+  color: #ffffff;
+  box-shadow: 0 8px 8px var(--shadow-color);
+}

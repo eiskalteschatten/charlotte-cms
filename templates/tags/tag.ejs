@@ -1,0 +1,20 @@
+<div class="container-fluid container-xxl">
+  <div class="row">
+    <div class="col-lg-9">
+      <h1 class="page-title"><%= title %></h1>
+      <%- include('../_partials/storyIndex.ejs') %>
+    </div>
+    <div class="col-lg-3 mt-5 mt-lg-0">
+      <div class="sidebar">
+        <div class="sidebar-block">
+          <h4 class="sidebar-block-header">Categories</h4>
+          <div class="sidebar-menu">
+            <% for (const _category of categories) { %>
+              <a href="/categories/<%= _category.slug %>/" class="sidebar-link"><%= _category.name %></a>
+            <% } %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,61 @@
+<div class="container-fluid container-xxl">
+  <h1 class="page-title"><%= title %></h1>
+
+  <div class="row">
+    <div class="col-lg-3 d-none d-lg-block">
+      <div class="sidebar right-sidebar">
+        <div class="sidebar-block">
+          <%- include('../../_partials/accountSidebarMenu.ejs') %>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-9">
+      <form class="d-flex gap-2 flex-column medium-width-form" id="updateMyProfileForm">
+        <div class="form-group mb-5">
+          <label for="bio" class="form-label">My Bio</label>
+          <textarea id="bio" name="bio" class="input full-width" rows="5"><%= profile.bio %></textarea>
+        </div>
+
+        <h4 class="small-section-title">My Links</h4>
+
+        <div class="form-group">
+          <label for="website" class="form-label">Website</label>
+          <input type="website" id="website" name="website" class="input full-width" value="<%= profile.links?.website %>" placeholder="https://">
+        </div>
+
+        <div class="form-group">
+          <label for="twitter" class="form-label">Twitter/X</label>
+          <input type="text" id="twitter" name="twitter" class="input full-width" value="<%= profile.links?.twitter %>" placeholder="https://">
+        </div>
+
+        <div class="form-group">
+          <label for="instagram" class="form-label">Instagram</label>
+          <input type="text" id="instagram" name="instagram" class="input full-width" value="<%= profile.links?.instagram %>" placeholder="https://">
+        </div>
+
+        <div class="form-group">
+          <label for="facebook" class="form-label">Facebook</label>
+          <input type="text" id="facebook" name="facebook" class="input full-width" value="<%= profile.links?.facebook %>" placeholder="https://">
+        </div>
+
+        <div class="form-group">
+          <label for="mastodon" class="form-label">Mastodon</label>
+          <input type="text" id="mastodon" name="mastodon" class="input full-width" value="<%= profile.links?.mastodon %>" placeholder="https://">
+        </div>
+
+        <div class="form-group">
+          <label for="bluesky" class="form-label">Bluesky</label>
+          <input type="text" id="bluesky" name="bluesky" class="input full-width" value="<%= profile.links?.bluesky %>" placeholder="https://">
+        </div>
+
+        <div class="form-group">
+          <button class="button primary" id="saveMyProfileButton" is="loader-button">
+            <span class="loading-button-label">Save</span>
+          </button>
+
+          <a href="/authors/<%= user.username %>" class="button mb-4" target="_blank">View Profile</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

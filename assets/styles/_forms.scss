@@ -1,0 +1,99 @@
+@use "variables";
+@use "mixins";
+
+.input {
+  @include mixins.formBase;
+  outline: none;
+  padding: 4px 10px;
+  color: var(--color);
+
+  &.large {
+    font-size: 1.1em;
+    padding: 8px 14px;
+  }
+
+  &.full-width {
+    width: 100%;
+  }
+}
+
+.input-with-icon {
+  @include mixins.formBase;
+
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+
+  &.focused {
+    box-shadow: 0 0 5px rgba(0, 0, 0, .5);
+  }
+
+  &.full-width {
+    width: 100%;
+  }
+
+  input {
+    background-color: transparent;
+    outline: none;
+    padding: 4px 10px;
+    border: none;
+    color: variables.$darkColor;
+    width: 100%;
+
+    &.large {
+      font-size: 1.1em;
+      padding: 8px 14px;
+    }
+  }
+
+  .label {
+    margin-bottom: 5px;
+    text-align: left;
+    user-select: none;
+  }
+}
+
+.form-group {
+  margin-bottom: 15px;
+
+  .form-label {
+    margin-bottom: 5px;
+    display: block;
+  }
+
+  .form-field-note {
+    font-size: .85em;
+    margin-top: 5px;
+  }
+}
+
+.input-auto-suggest {
+  position: absolute;
+  z-index: 100;
+  background-color: var(--background-color);
+  border-radius: var(--border-radius);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 0 15px var(--shadow-color);
+  min-width: 200px;
+  max-width: 100%;
+  max-height: 200px;
+  overflow: auto;
+  padding: 10px;
+  display: none;
+
+  &.open {
+    display: block;
+  }
+
+  .input-auto-suggest-link {
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: var(--border-radius);
+    @include mixins.hoverActiveBackgrounds;
+  }
+}
+
+.medium-width-form {
+  width: 600px;
+  max-width: 100%;
+}

@@ -1,0 +1,124 @@
+<div class="container-fluid container-xxl">
+  <div class="row" id="story" data-id="<%= story.id %>">
+    <div class="col-lg-8">
+      <div class="mb-4">
+        <h1 class="page-title pb-0"><%= title %></h1>
+
+        <div class="story-author">
+          by <a href="/authors/<%= story.user.username %>/"><%= story.user.username %></a>
+        </div>
+      </div>
+
+      <div class="mb-5">
+        <%- story.renderedStory %>
+      </div>
+
+      <!-- next and previous parts of series -->
+    </div>
+    <div class="col-lg-4 mt-3 mt-lg-0">
+      <div class="sidebar">
+        <div class="sidebar-block">
+          <h4 class="sidebar-block-header">Story Info</h4>
+          <div class="sidebar-block-content">
+            <%= story.shortDescription %>
+          </div>
+
+          <div class="sidebar-block-content">
+            <% if (story.status === 'published') { %>
+              Published on <%= helpers.formatLocaleDateDigits(story.publishedAt) %>
+            <% } else { %>
+              This story is a draft and was last updated on <%= helpers.formatLocaleDateDigits(story.updatedAt) %>.
+            <% } %>
+          </div>
+
+          <%- include('../_partials/storyStats.ejs', { story, noAdditionalTags: true }) %>
+        </div>
+
+        <div class="sidebar-block">
+          <h4 class="sidebar-block-header">Categories</h4>
+          <div class="sidebar-block-content d-flex flex-wrap gap-2">
+            <% for (const category of story.categories) { %>
+              <a href="/categories/<%= category.slug %>/" class="badge small"><%= category.name %></a>
+            <% } %>
+          </div>
+        </div>
+
+        <div class="sidebar-block">
+          <h4 class="sidebar-block-header">Tags</h4>
+          <div class="sidebar-block-content d-flex flex-wrap gap-2">
+            <% for (const tag of story.tags) { %>
+              <a href="/tags/<%= tag.slug %>/" class="badge small"><%= tag.tag %></a>
+            <% } %>
+          </div>
+        </div>
+
+        <!-- series -->
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-8 mt-5 mt-lg-0">
+    <% if (story.openForRatings) { %>
+      <div class="story-ratings mb-5">
+        <h2 class="mb-3">Rate This Story</h2>
+        <div class="d-inline-flex align-items-center gap-2" id="storyRatingStars" <% if (typeof user !== 'undefined') { %>data-logged-in="true"<% } %>>
+          <div class="rating-star <% if (story.averageRating > 0.5) { %>filled<% } %>" data-rating="1">
+            <span class="material-icons">star</span>
+          </div>
+          <div class="rating-star <% if (story.averageRating > 1.5) { %>filled<% } %>" data-rating="2">
+            <span class="material-icons">star</span>
+          </div>
+          <div class="rating-star <% if (story.averageRating > 2.5) { %>filled<% } %>" data-rating="3">
+            <span class="material-icons">star</span>
+          </div>
+          <div class="rating-star <% if (story.averageRating > 3.5) { %>filled<% } %>" data-rating="4">
+            <span class="material-icons">star</span>
+          </div>
+          <div class="rating-star <% if (story.averageRating > 4.5) { %>filled<% } %>" data-rating="5">
+            <span class="material-icons">star</span>
+          </div>
+        </div>
+      </div>
+    <% } %>
+
+    <% if (story.openForComments) { %>
+      <div>
+        <h2 class="mb-3">Comments</h2>
+
+        <% if (typeof user !== 'undefined') { %>
+          <div class="mb-5">
+            <form id="comment-form" method="post" action="/stories/<%= story.slug %>/comments/post">
+              <input type="hidden" name="storyId" value="<%= story.id %>">
+              <div class="form-group">
+                <textarea name="comment" rows="4" placeholder="What did you think of the story?" class="input full-width" required></textarea>
+              </div>
+              <button class="button primary large" id="postCommentButton" is="loader-button">
+                <span class="loading-button-label">Post Comment</span>
+              </button>
+            </form>
+          </div>
+        <% } else { %>
+          <div class="comment mb-5">You must be logged in to comment on this story. <a href="/auth/login/" target="_blank">Login</a> or <a href="/auth/register/" target="_blank">Register</a></div>
+        <% } %>
+
+        <div class="story-comments d-flex flex-column gap-3" id="comments">
+          <% if (story.comments.length > 0) { %>
+            <% for (const comment of story.comments) { %>
+              <div class="comment rounded-box">
+                <div class="d-flex align-items-center justify-content-between mb-2">
+                  <a href="/authors/<%= comment.user.username %>/"><%= comment.user.username %></a>
+                  <span class="comment-date"><%= helpers.formatLocaleDateDigits(comment.createdAt) %></span>
+                </div>
+                <div><%= comment.comment %></div>
+              </div>
+            <% } %>
+          <% } else { %>
+            <div class="comment rounded-box">No comments yet. Be the first to comment!</div>
+          <% } %>
+        </div>
+      </div>
+    <% } %>
+
+    <!-- next and previous parts of series -->
+  </div>
+</div>

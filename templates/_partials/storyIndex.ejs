@@ -1,0 +1,43 @@
+<% if (stories.length === 0) { %>
+  <div class="d-flex flex-column align-items-center gap-4 py-4 rounded-box">
+    <div>No stories could be found.</div>
+    <div>
+      <a href="/account/stories/submit/" class="button primary"><span class="material-icons">add</span> Submit a Story</a>
+    </div>
+  </div>
+<% } else { %>
+  <div class="story-list">
+    <% for (const story of stories) { %>
+      <div class="story-block rounded-box">
+        <a href="/stories/<%= story.slug %>/" class="story-title"><%= story.title %></a>
+
+        <div class="story-description-wrapper">
+          <% if (story.isErotic) { %>
+            <div>
+              <%- include('../_partials/story-tags/eighteenPlus.ejs') %>
+            </div>
+          <% } %>
+          <div class="story-description"><%= story.shortDescription %></div>
+        </div>
+
+        <div class="story-author-wrapper">
+          <div class="story-author">by <a href="/authors/<%= story.user.username %>/"><%= story.user.username %></a></div>
+          <div class="story-publication-date"><%= helpers.formatLocaleDateDigits(story.publishedAt) %></div>
+        </div>
+
+        <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-md-between">
+          <%- include('../_partials/storyStats.ejs', { story }) %>
+
+          <div class="story-categories">
+            <% for (const category of story.categories) { %>
+              <a href="/categories/<%= category.slug %>/"><%= category.name %></a><% if (story.categories.indexOf(category) !== story.categories.length - 1) { %>,<% } %>
+            <% } %>
+          </div>
+        </div>
+      </div>
+    <% } %>
+  </div>
+
+  <%- include('./pagination.ejs') %>
+<% } %>
+

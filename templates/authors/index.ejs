@@ -1,0 +1,44 @@
+<div class="container-fluid container-xxl">
+  <div class="row">
+    <div class="col-md-9">
+      <h1 class="page-title"><%= title %></h1>
+
+      <% if (userProfile.bio) { %>
+        <div class="mb-5 rounded-box">
+          <%= userProfile.bio %>
+        </div>
+      <% } %>
+      <div>
+        <h2 class="mb-4">Stories</h2>
+        <%- include('../_partials/storyIndex.ejs') %>
+      </div>
+    </div>
+    <div class="col-lg-3 mt-5 mt-lg-0">
+      <div class="sidebar">
+        <div class="sidebar-block has-divider">
+          Member since: <%= helpers.formatLocaleDateDigits(userProfile.createdAt) %>
+        </div>
+        <div class="sidebar-block">
+          <% if (userProfile.links?.website) { %>
+            <a href="<%= userProfile.links.website %>" target="_blank">Website</a>
+          <% } %>
+          <% if (userProfile.links?.twitter) { %>
+            <a href="<%= userProfile.links.twitter %>" target="_blank">Twitter/X</a>
+          <% } %>
+          <% if (userProfile.links?.instagram) { %>
+            <a href="<%= userProfile.links.instagram %>" target="_blank">Instagram</a>
+          <% } %>
+          <% if (userProfile.links?.facebook) { %>
+            <a href="<%= userProfile.links.facebook %>" target="_blank">Facebook</a>
+          <% } %>
+          <% if (userProfile.links?.mastodon) { %>
+            <a href="<%= userProfile.links.mastodon %>" target="_blank">Mastodon</a>
+          <% } %>
+          <% if (userProfile.links?.bluesky) { %>
+            <a href="<%= userProfile.links.bluesky %>" target="_blank">Bluesky</a>
+          <% } %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

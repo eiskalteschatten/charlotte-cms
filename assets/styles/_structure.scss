@@ -1,0 +1,13 @@
+@use "variables";
+
+.section {
+  padding: 75px 0;
+
+  &.no-padding-top {
+    padding-top: 0;
+  }
+
+  .section-header {
+    margin-bottom: 20px;
+  }
+}

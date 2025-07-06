@@ -1,0 +1,17 @@
+<div class="container-fluid container-xxl">
+  <h1 class="page-title"><%= title %></h1>
+
+  <div class="tag-search-wrapper d-flex justify-content-center mb-5">
+    <form class="input-with-icon tag-search" id="tagSearchForm">
+      <span class="material-icons">search</span>
+
+      <input type="search" class="large" id="tagSearchField" placeholder="Search tags...">
+
+      <button class="button icon-button transparent-bg">
+        <span class="material-icons">arrow_forward</span>
+      </button>
+    </form>
+  </div>
+
+  <%- include('../_partials/tagCloud.ejs') %>
+</div>

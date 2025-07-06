@@ -1,0 +1,19 @@
+.footer {
+  background-color: #000000;
+  color: #ffffff;
+  font-size: .9em;
+
+  a {
+    color: #ffffff;
+    text-decoration: underline;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
+  .copyright {
+    font-size: .9em;
+    opacity: .7;
+  }
+}

@@ -1,0 +1,15 @@
+@use "../../mixins";
+
+.edit-story-field-required {
+  font-size: .9em;
+  font-style: italic;
+}
+
+.edit-story-categories {
+  height: 210px;
+  overflow: auto;
+  background-color: var(--background-secondary-color);
+  padding: 8px 12px;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--border-color);
+}

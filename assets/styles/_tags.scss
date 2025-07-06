@@ -1,0 +1,26 @@
+@use "variables";
+
+.tag-search-wrapper {
+  .tag-search {
+    width: 600px;
+    max-width: 100%;
+  }
+}
+
+.tag-cloud {
+  .tag-block {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    border-radius: var(--border-radius);
+    background-color: var(--background-secondary-color);
+    padding: 0 12px;
+    transition: background-color 350ms;
+    color: var(--color);
+
+    &:hover {
+      color: variables.$darkColor;
+      background-color: var(--primary-color);
+    }
+  }
+}

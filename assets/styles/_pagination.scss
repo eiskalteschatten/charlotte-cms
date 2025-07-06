@@ -1,0 +1,20 @@
+@use "variables";
+
+.pagination {
+  .pagination-link {
+    &.selected {
+      color: variables.$darkColor;
+      background-color: var(--primary-color);
+    }
+
+    &.disabled {
+      opacity: 0.2;
+      cursor: default;
+
+      &:hover {
+        background-color: var(--background-secondary-color);
+        color: var(--color);
+      }
+    }
+  }
+}

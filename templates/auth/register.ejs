@@ -1,0 +1,39 @@
+<div class="container-fluid container-xxl">
+  <h1 class="text-center page-title">Create an Account</h1>
+
+  <% if (typeof error !== 'undefined') { %>
+    <div class="d-flex justify-content-center mb-5">
+      <div class="alert error" role="alert"><%=error%></div>
+    </div>
+  <% } %>
+
+  <form action="/auth/register" method="post" class="d-flex flex-column align-items-center">
+    <div class="form-group">
+      <label for="username" class="form-label">Username</label>
+      <input type="text" class="input auth-input" name="username" required="required">
+    </div>
+
+    <div class="form-group">
+      <label for="email" class="form-label">Email Address</label>
+      <input type="email" class="input auth-input" name="email" required="required">
+    </div>
+
+    <div class="form-group">
+      <label for="password" class="form-label">Password</label>
+      <input type="password" class="input auth-input" name="password" required="required">
+    </div>
+
+    <div class="form-group">
+      <label for="password" class="form-label">Confirm Password</label>
+      <input type="password" class="input auth-input" name="confirmPassword" required="required">
+    </div>
+
+    <div class="text-center mt-4">
+      <button type="submit" class="button primary large">Register</button>
+    </div>
+  </form>
+
+  <footer class="auth-footer mt-5 opacity-75 text-center">
+    Already have an account? <a href="/auth/login/">Log In</a>
+  </footer>
+</div>

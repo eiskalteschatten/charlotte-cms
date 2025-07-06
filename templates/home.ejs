@@ -1,0 +1,49 @@
+<div class="container-fluid container-xxl home">
+  <section class="section pt-0 pt-md-5 row">
+    <div class="col-lg-8 d-flex gap-4 mb-4">
+      <img src="/images/logo.svg" alt="TF Labs Logo" width="220" height="220" class="d-none d-md-block">
+
+      <div>
+        <h1 class="top-text">Welcome to TF Labs!</h1>
+        <p class="headline-description">TF Labs is a platform that features transformation stories of all sorts. Characters turn into objects, animals, or plants, undergo fantastical changes like inflating, flattening, and expanding, and much more &mdash; the imagination is the limit!</p>
+        <p><a href="/about" class="has-icon">Read more<span class="material-icons">arrow_forward</span></a></p>
+        </span></a></p>
+      </div>
+    </div>
+
+    <div class="col-lg-4 d-flex align-items-center justify-content-center">
+      <div>
+        <a class="button primary large js-track-click-event" href="/account/stories/submit/" data-tracking-action="Homepage" data-tracking-name="Submit a Story">
+          <span class="material-icons">add</span> Submit a Story
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="row section">
+    <div class="col-lg-6 mb-5 mb-md-0">
+      <h2 class="mb-4">Latest Stories</h2>
+      <%- include('./_partials/storyIndex.ejs', { stories: latestStories }) %>
+    </div>
+    <div class="col-lg-6">
+      <h2 class="mb-4">Most Popular Stories</h2>
+      <%- include('./_partials/storyIndex.ejs', { stories: mostPopuplarStories }) %>
+    </div>
+    <div class="col-12 text-center mt-5">
+      <a href="/stories" class="button primary">Browse Stories <span class="material-icons">arrow_forward</span></a>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-header">Most Popular Tags</h2>
+    <%- include('./_partials/tagCloud.ejs') %>
+    <div class="text-center mt-5">
+      <a href="/tags" class="button primary">Browse Tags <span class="material-icons">arrow_forward</span></a>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-header">Categories</h2>
+    <%- include('./_partials/categoryGrid.ejs') %>
+  </section>
+</div>

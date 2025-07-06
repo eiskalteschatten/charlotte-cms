@@ -1,0 +1,65 @@
+<div class="container-fluid container-xxl">
+  <h1 class="page-title"><%= title %></h1>
+
+  <div class="row">
+    <div class="col-lg-3 d-none d-lg-block">
+      <div class="sidebar right-sidebar">
+        <div class="sidebar-block">
+          <%- include('../../_partials/accountSidebarMenu.ejs') %>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-9">
+      <% if (stories.length === 0) { %>
+        <div class="d-flex flex-column align-items-center gap-4 py-4 rounded-box">
+          <div>You have not submitted any stories yet.</div>
+          <div>
+            <a href="/account/stories/submit/" class="button primary"><span class="material-icons">add</span> Submit a Story</a>
+          </div>
+        </div>
+      <% } else { %>
+        <div class="story-list my-stories">
+          <% for (const story of stories) { %>
+            <div class="story-block rounded-box">
+              <div class="d-flex align-items-center justify-content-between">
+                <a href="/account/stories/edit/<%= story.id %>/" class="story-title"><%= story.title %></a>
+                <% if (story.status === 'draft') { %>
+                  <a href="/stories/<%= story.slug %>/?preview=true" target="_blank" class="story-action-button body-color"><span class="material-icons">open_in_new</span></a>
+                <% } else { %>
+                  <a href="/stories/<%= story.slug %>/" target="_blank" class="story-action-button body-color"><span class="material-icons">open_in_new</span></a>
+                <% } %>
+              </div>
+
+              <div class="story-description-wrapper">
+                <% if (story.isErotic) { %>
+                  <%- include('../../_partials/story-tags/eighteenPlus.ejs') %>
+                <% } %>
+                <div class="story-description"><%= story.shortDescription %></div>
+              </div>
+
+              <div class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-sm-between">
+                <%- include('../../_partials/storyStats.ejs', { story, noAdditionalTags: true }) %>
+
+                <div class="story-categories">
+                  <% for (const category of story.categories) { %>
+                    <a href="/categories/<%= category.slug %>/"><%= category.name %></a><% if (story.categories.indexOf(category) !== story.categories.length - 1) { %>,<% } %>
+                  <% } %>
+                </div>
+              </div>
+
+              <div class="story-status">
+                <% if (story.status === 'published') { %>
+                  <strong>Published</strong> on <%= helpers.formatLocaleDateTime(story.publishedAt) %>
+                <% } else { %>
+                  <strong class="text-capitalize"><%= story.status %></strong>
+                <% } %>
+              </div>
+            </div>
+
+            <%- include('../../_partials/pagination.ejs') %>
+          <% } %>
+        </div>
+      <% } %>
+    </div>
+  </div>
+</div>

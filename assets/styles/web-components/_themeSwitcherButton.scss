@@ -1,0 +1,7 @@
+theme-switcher-button {
+  cursor: pointer;
+
+  &.active {
+    color: var(--primary-color);
+  }
+}

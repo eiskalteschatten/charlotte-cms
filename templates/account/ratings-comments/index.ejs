@@ -1,0 +1,69 @@
+<div class="container-fluid container-xxl">
+  <h1 class="page-title"><%= title %></h1>
+
+  <div class="row">
+    <div class="col-lg-3 d-none d-lg-block">
+      <div class="sidebar right-sidebar">
+        <div class="sidebar-block">
+          <%- include('../../_partials/accountSidebarMenu.ejs') %>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-9">
+      <div class="row">
+        <div class="col-sm-8 mb-5 mb-sm-0">
+          <h4 class="small-section-title">Comments</h4>
+
+          <% if (typeof comments === 'undefined' || comments.length === 0) { %>
+            <div class="rounded-box">No comments found.</div>
+          <% } else { %>
+            <div class="story-comments d-flex flex-column gap-3">
+              <% for (const comment of comments) { %>
+                <div class="comment rounded-box">
+                  <div class="d-flex align-items-center justify-content-between mb-2">
+                    <a href="/stories/<%= comment.story.slug %>/"><%= comment.story.title %></a>
+                    <span class="comment-date"><%= helpers.formatLocaleDateDigits(comment.createdAt) %></span>
+                  </div>
+                  <div><%= comment.comment %></div>
+                </div>
+              <% } %>
+            </div>
+          <% } %>
+        </div>
+        <div class="col-sm-4">
+          <h4 class="small-section-title">Ratings</h4>
+
+          <% if (typeof ratings === 'undefined' || ratings.length === 0) { %>
+            <div class="rounded-box">No ratings found.</div>
+          <% } else { %>
+            <div class="story-ratings account-page d-flex flex-column gap-3">
+              <% for (const rating of ratings) { %>
+                <div class="rating-star-wrapper rounded-box">
+                  <a href="/stories/<%= rating.story.slug %>/" class="d-block"><%= rating.story.title %></a>
+
+                  <div class="d-inline-flex align-items-center gap-1">
+                    <div class="rating-star <% if (rating.rating >= 1) { %>filled<% } %>" data-rating="1">
+                      <span class="material-icons">star</span>
+                    </div>
+                    <div class="rating-star <% if (rating.rating >= 2) { %>filled<% } %>" data-rating="2">
+                      <span class="material-icons">star</span>
+                    </div>
+                    <div class="rating-star <% if (rating.rating >= 3) { %>filled<% } %>" data-rating="3">
+                      <span class="material-icons">star</span>
+                    </div>
+                    <div class="rating-star <% if (rating.rating >= 4) { %>filled<% } %>" data-rating="4">
+                      <span class="material-icons">star</span>
+                    </div>
+                    <div class="rating-star <% if (rating.rating >= 5) { %>filled<% } %>" data-rating="5">
+                      <span class="material-icons">star</span>
+                    </div>
+                  </div>
+                </div>
+              <% } %>
+            </div>
+          <% } %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

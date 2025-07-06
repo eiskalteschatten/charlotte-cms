@@ -1,0 +1,11 @@
+@use "../../styles/variables";
+
+mobile-menu-button {
+  cursor: default;
+  user-select: none;
+  width: 22px;
+
+  @media (min-width: variables.$lgMin) {
+    display: none;
+  }
+}

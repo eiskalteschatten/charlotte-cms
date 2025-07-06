@@ -1,0 +1,11 @@
+<div class="sidebar-menu">
+  <% for (const menuItem of accountMenu) { %>
+    <% if ('divider' in menuItem) { %>
+      <div class="sidebar-menu-divider"></div>
+    <% } else { %>
+      <a href="<%=menuItem.url%>" class="sidebar-link <% if (typeof sidebarMenuId !== 'undefined' && sidebarMenuId === menuItem.id) { %>selected<% } %>">
+        <%=menuItem.label%>
+      </a>
+    <% } %>
+  <% } %>
+</div>

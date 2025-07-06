@@ -1,0 +1,12 @@
+<div class="d-flex flex-wrap gap-3">
+  <% for (const category of categories) { %>
+    <div class="link-box">
+      <a href="/categories/<%= category.slug %>/" class="link">
+        <%= category.name %>
+      </a>
+      <div class="description">
+        <%= category.description %> <span class="category-story-count">(<%= category.storyCount %>)</span>
+      </div>
+    </div>
+  <% } %>
+</div>

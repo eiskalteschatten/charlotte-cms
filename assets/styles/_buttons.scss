@@ -1,0 +1,67 @@
+@use "sass:color";
+@use "variables";
+@use "mixins";
+
+.button {
+  @include mixins.formBase;
+  @include mixins.hoverActiveBackgrounds;
+
+  padding: 3px 10px;
+  font-size: .9em;
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-block;
+  white-space: nowrap;
+  user-select: none;
+  display: inline-flex;
+  align-items: center;
+  width: auto;
+  gap: 5px;
+  transition: background-color variables.$animationSpeed, color variables.$animationSpeed;
+
+  @media (max-width: variables.$xsMax) {
+    white-space: normal;
+  }
+
+  &.icon-button {
+    padding: 0 6px;
+  }
+
+  &.delete-button {
+    color: variables.$paletteRed;
+
+    &:hover {
+      color: variables.$paletteRed;
+    }
+  }
+
+  &.large {
+    font-size: 1em;
+    padding: 5px 12px;
+  }
+
+  &.primary {
+    background-color: variables.$primaryColor;
+    color: variables.$darkColor;
+    border-color: transparent;
+
+    &:hover:not(:disabled) {
+      background-color: color.adjust(variables.$primaryColor, $lightness: -6%);
+      color: variables.$darkColor;
+    }
+
+    &:active:not(:disabled) {
+      background-color: color.adjust(variables.$primaryColor, $lightness: -12%);
+      color: variables.$darkColor;
+    }
+  }
+
+  &.full-width {
+    width: 100%;
+  }
+
+  &.transparent-bg {
+    background-color: transparent;
+    border-color: transparent;
+  }
+}

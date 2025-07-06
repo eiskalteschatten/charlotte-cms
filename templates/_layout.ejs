@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#000000">
+    <meta name="description" content="">
+    <meta name="color-scheme" content="light dark">
+
+    <title><%= typeof title !== 'undefined' ? `${title} - Carlotte CMS` : 'Carlotte CMS' %></title>
+
+    <link rel="preload" href="<%= webpackManifest['MaterialIconsOutlined-Regular.otf'] %>" as="font" crossorigin>
+    <link rel="preload" href="<%= webpackManifest['Quantico-Regular.ttf'] %>" as="font" crossorigin>
+    <link rel="preload" href="<%= webpackManifest['Quantico-Bold.ttf'] %>" as="font" crossorigin>
+
+    <link rel="icon" type="image/svg+xml" href="/images/favicon.svg">
+
+    <link rel="stylesheet" href="<%= webpackManifest['styles.css'] %>">
+
+    <script defer src="<%= webpackManifest['main.js'] %>"></script>
+
+    <% if (typeof scripts !== 'undefined' && scripts.length > 0) { %>
+      <% for (const script of scripts) { %>
+        <script <%= script.loadingMethod %> src="<%= script.name %>"></script>
+      <% } %>
+    <% } %>
+
+    <script>
+      (function() {
+        const savedTheme = localStorage.getItem('theme');
+
+        if (savedTheme) {
+          document.documentElement.setAttribute('tf-theme', savedTheme);
+        }
+        else {
+          const handleDarkModeChange = event => document.documentElement.setAttribute('tf-theme', event.matches ? 'dark' : 'light');
+          window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', handleDarkModeChange);
+          handleDarkModeChange(window.matchMedia('(prefers-color-scheme: dark)'));
+        }
+      })()
+    </script>
+  </head>
+  <body>
+    <header class="header py-2">
+      <div class="container-fluid d-flex align-items-center justify-content-between h-100">
+        <div class="d-flex align-items-center gap-2 gap-xl-5">
+          <mobile-menu-button></mobile-menu-button>
+
+          <%- include('./_partials/logo.ejs', { whiteLogo: true }) %>
+
+          <nav class="d-none d-xl-flex align-items-center gap-2 main-nav">
+            <% for (const navItem of mainNav) { %>
+              <a href="<%=navItem.url%>" class="main-nav-button <% if (typeof mainNavId !== 'undefined' && mainNavId === navItem.id) { %>selected<% } %>">
+                <%=navItem.label%>
+              </a>
+            <% } %>
+          </nav>
+        </div>
+
+        <nav class="d-flex align-items-center gap-1 main-nav">
+          <% if (typeof user !== 'undefined') { %>
+            <div class="d-none d-xl-block">
+              <a href="/account/" class="account-menu-icon mx-xl-3" id="accountMenuButton">
+                <span class="material-icons">person</span>
+              </a>
+
+              <account-menu>
+                <a href="/authors/<%= user.username %>" class="account-menu-username body-color d-block"><%= user.username %></a>
+
+                <% for (const menuItem of accountMenu) { %>
+                  <% if ('divider' in menuItem) { %>
+                    <div class="account-menu-divider"></div>
+                  <% } else { %>
+                    <a href="<%=menuItem.url%>" class="account-menu-link">
+                      <%=menuItem.label%>
+                    </a>
+                  <% } %>
+                <% } %>
+              </account-menu>
+            </div>
+          <% } else { %>
+            <div class="me-3">
+              <a href="/auth/login/" class="main-nav-button <% if (typeof mainNavId !== 'undefined' && mainNavId === 'login') { %>selected<% } %>">Log In</a>
+              <a href="/auth/register/" class="main-nav-button d-none d-sm-inline <% if (typeof mainNavId !== 'undefined' && mainNavId === 'register') { %>selected<% } %>">Register</a>
+            </div>
+          <% } %>
+
+          <a class="d-none d-md-flex button primary js-track-click-event" href="/account/stories/submit/" data-tracking-action="Header" data-tracking-name="Submit a Story Desktop">
+            <span class="material-icons">add</span> Submit a Story
+          </a>
+          <a class="d-inline d-md-none button icon-button primary js-track-click-event" href="/account/stories/submit/" data-tracking-action="Header" data-tracking-name="Submit a Story Mobile">
+            <span class="material-icons">add</span>
+          </a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="py-4">
+      <%- body %>
+    </main>
+
+    <footer class="footer py-5">
+      <div class="container d-flex flex-column flex-xl-row justify-content-xl-between align-items-xl-center gap-4">
+        <%- include('./_partials/logo.ejs', { whiteLogo: true }) %>
+
+        <div class="d-flex flex-column flex-lg-row gap-2 gap-lg-3">
+          <a href="/">Home</a>
+          <a href="/documents/imprint/">Imprint</a>
+          <a href="/documents/privacy-statement/">Privacy Statement</a>
+          <a href="/documents/terms-of-service/">Terms of Service</a>
+          <a href="/documents/">Publication Guidelines</a>
+          <a href="/about">About</a>
+          <a href="/contact/">Contact</a>
+        </div>
+
+        <%- include('./_partials/themeSwitcher.ejs') %>
+      </div>
+
+      <div class="text-center mt-4 copyright">
+        &copy; TF Labs 2025
+      </div>
+    </footer>
+
+    <%- include('./_partials/mobileMenu.ejs') %>
+
+    <% /*
+    <dialog is="cookie-banner" id="cookieBanner">
+      <div class="cookie-banner-content">
+        <p><strong>We value your privacy!</strong></p>
+        <p>This website uses local storage solely to save your login credentials and essential technical settings required for its proper operation. We do not use any cookies or tracking technologies for marketing or analytics purposes.</p>
+        <p>By continuing to browse our site, you consent to the storage of this strictly necessary data. For detailed information, please review our <a href="/privacy-statement">Privacy Statement</a>.</p>
+      </div>
+
+      <div class="d-flex gap-3 mt-4 justify-content-center">
+        <button class="button" id="cookieBannerOnlyNecessaryButton">Only Necessary</button>
+        <button class="button primary" id="cookieBannerAcceptAllButton">Accept All</button>
+      </div>
+    </dialog>
+    */ %>
+
+    <to-the-top></to-the-top>
+    <mobile-menu-backdrop></mobile-menu-backdrop>
+    <div id="toast" class="alert toast">
+      <div id="toastContent"></div>
+      <div class="close-button">
+        <span class="material-icons" id="toastCloseButton">close</span>
+      </div>
+    </div>
+  </body>
+</html>

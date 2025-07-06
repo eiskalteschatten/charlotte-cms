@@ -1,0 +1,121 @@
+@use "variables";
+@use "mixins";
+
+.story-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+
+  .story-block {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    .story-title {
+      color: var(--color);
+      font-size: 1.25em;
+      font-weight: 600;
+
+      &:hover {
+        color: var(--primary-color);
+      }
+    }
+
+    .story-action-button {
+      font-size: .9em;
+    }
+
+    .story-description-wrapper {
+      display: flex;
+      gap: 5px;
+      align-items: center;
+
+      .story-description {
+        font-size: .85em;
+        opacity: .9;
+      }
+    }
+
+    .story-author-wrapper {
+      display: flex;
+      gap: 5px;
+      align-items: center;
+      justify-content: space-between;
+      font-size: .75em;
+      opacity: .9;
+    }
+
+    .story-categories {
+      font-size: .8em;
+    }
+  }
+}
+
+.story-tag {
+  font-size: 11px;
+  padding: 0 4px;
+  border-radius: 2px;
+  user-select: none;
+  text-transform: uppercase;
+
+  &.eighteen-plus {
+    background-color: variables.$paletteRed;
+    color: #ffffff;
+  }
+
+  &.new {
+    background-color: variables.$paletteGreen;
+    color: #ffffff;
+  }
+}
+
+.story-stats {
+  font-size: .7em;
+  opacity: .8;
+  display: flex;
+  gap: 20px;
+  user-select: none;
+  align-items: center;
+
+  .story-stat-item {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+  }
+}
+
+.story-ratings {
+  [data-logged-in="true"] {
+    .rating-star {
+      cursor: pointer;
+    }
+  }
+
+  &.account-page {
+    .rating-star-wrapper {
+      .rating-star {
+        cursor: default;
+        font-size: 15px;
+      }
+    }
+  }
+
+  .rating-star {
+    font-size: 22px;
+    opacity: .3;
+    user-select: none;
+
+    &.filled, &.hover {
+      opacity: 1;
+      color: variables.$paletteYellow;
+    }
+  }
+}
+
+.story-comments {
+  .comment {
+    .comment-date {
+      font-size: .8em;
+    }
+  }
+}

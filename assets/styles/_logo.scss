@@ -1,0 +1,38 @@
+@use "./variables";
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  .logo-image {
+    width: 35px;
+    height: 35px;
+  }
+
+  .logo-link {
+    font-size: 19px;
+    text-decoration: none !important;
+    transition: color 200ms;
+    color: var(--color);
+    font-weight: 700;
+    font-family: 'Quantico', sans-serif;
+    text-transform: uppercase;
+    position: relative;
+
+    &.white-logo {
+      color: #ffffff;
+    }
+
+    .beta-label {
+      position: absolute;
+      font-size: 9px;
+      background-color: variables.$paletteOrange;
+      color: #000000;
+      padding: 0 2px;
+      top: -2px;
+      right: -20px;
+      rotate: 30deg;
+    }
+  }
+}

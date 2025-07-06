@@ -1,0 +1,53 @@
+@use "sass:color";
+
+$paletteBlue: #4285f4;
+$paletteDarkBlue: #01579b;
+$paletteYellow: #fbbc05;
+$paletteRed: #ea4335;
+$paletteGreen: #24a853;
+$paletteOrange: #ff8f00;
+$paletteDarkGray: #2F3436;
+$paletteLightGray: #d3d3d3;
+$palettePink: #ff0080;
+$palettePurple: #7928ca;
+$paletteTan: #f7efcb;
+$paletteBrown: #544130;
+
+$primaryColor: $paletteGreen;
+
+$gradientGreenLight: #7DEF87;
+$gradientGreenDark: #1A9646;
+
+$lightBg: #f1f1f1;
+$lightSecondaryBg: #ffffff;
+$lightColor: #1a1816;
+$lightShadowColor: #00000010;
+$darkBg: #101010;
+$darkSecondaryBg: #28282b;
+$darkColor: #f1f1f1;
+$lightBorderColor: #cfcfcf;
+$lightBorderLighterColor: color.adjust($lightBorderColor, $lightness: 15%);
+$darkBorderColor: #333333;
+$darkBorderLighterColor: color.adjust($darkBorderColor, $lightness: -10%);
+$darkShadowColor: #06070d33;
+
+$borderRadius: 5px;
+
+$navZIndex: 1000000;
+
+$dialogPadding: 10px;
+$dialogZIndex: $navZIndex * 10;
+
+$successColor: $paletteGreen;
+$errorColor: $paletteRed;
+
+$toolbarHeight: 55px;
+
+$animationSpeed: 350ms;
+
+$xsMax: 767px;
+$smMax: 992px;
+$mdMax: 1200px;
+$smMin: $xsMax + 1px;
+$mdMin: $smMax + 1px;
+$lgMin: $mdMax + 1px;

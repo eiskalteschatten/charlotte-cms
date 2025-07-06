@@ -1,0 +1,103 @@
+@use "mixins";
+@use "variables";
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+
+  &.right-sidebar {
+    .sidebar-block {
+      margin-left: 0;
+      margin-right: 15px;
+    }
+  }
+
+  .sidebar-block {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-left: 15px;
+    padding-bottom: 25px;
+
+    @media (max-width: variables.$smMax) {
+      margin: 0;
+    }
+
+    &.has-divider {
+      @include mixins.stackedElement;
+    }
+
+    .sidebar-block-header {
+      $borderSize: 2px;
+
+      margin-bottom: 10px;
+      font-size: 20px;
+      position: relative;
+      border-bottom: $borderSize solid var(--border-color);
+      padding-bottom: 12px;
+
+      &::after {
+        content: '';
+        background: var(--primary-color);
+        width: 35px;
+        height: $borderSize;
+        position: absolute;
+        left: 0px;
+        bottom: -$borderSize;
+        border-radius: var(--border-radius);
+      }
+    }
+
+    .sidebar-block-content  {
+      font-size: .9em;
+
+      a {
+        font-size: .9em;
+      }
+    }
+  }
+}
+
+.sidebar-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+  @media (max-width: variables.$mdMax) {
+    margin-bottom: 50px;
+  }
+
+  .sidebar-link {
+    display: block;
+    color: var(--color);
+    padding: 5px 10px;
+    border-radius: var(--border-radius);
+    font-size: .92em;
+
+    @include mixins.hoverActiveBackgrounds;
+
+    &.selected {
+      background-color: var(--active-background-color);
+      position: relative;
+
+      &::before {
+        content: '';
+        background: var(--primary-color);
+        width: 4px;
+        height: calc(100% - 8px);
+        position: absolute;
+        left: -7px;
+        top: 4px;
+        border-radius: var(--border-radius);
+      }
+    }
+  }
+
+  .sidebar-menu-divider {
+    margin: 10px 0;
+    height: 1px;
+    background-color: var(--border-color);
+  }
+}
+
