@@ -7,9 +7,9 @@ module.exports = {
   devtool: 'inline-source-map',
   entry: {
     main: { import: './assets/scripts/index.js', filename: 'main.[contenthash].js' },
-    story: { import: './assets/scripts/story/index.js', filename: 'story.[contenthash].js' },
+    post: { import: './assets/scripts/post/index.js', filename: 'post.[contenthash].js' },
     account: { import: './assets/scripts/account/index.js', filename: 'account.[contenthash].js' },
-    editStory: { import: './assets/scripts/editStory/index.js', filename: 'edit-story.[contenthash].js' },
+    editPost: { import: './assets/scripts/editPost/index.js', filename: 'edit-post.[contenthash].js' },
     myProfile: { import: './assets/scripts/myProfile/index.js', filename: 'my-profile.[contenthash].js' },
     tags: { import: './assets/scripts/tags/index.js', filename: 'tags.[contenthash].js' },
     styles: { import: './assets/styles/index.js', filename: 'styles.[contenthash].js' },
