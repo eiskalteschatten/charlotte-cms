@@ -1,8 +1,8 @@
 import AbstractEmailService from './AbstractEmailService';
 
 export interface EmailData {
-  storyTitle: string;
-  storyLink: string;
+  postTitle: string;
+  postLink: string;
 }
 
 export default class RatingNotificationEmailService extends AbstractEmailService {
@@ -10,7 +10,7 @@ export default class RatingNotificationEmailService extends AbstractEmailService
     return `<html>
       <body>
         <p>
-          Someone just rated <a href="${emailData.storyLink}">${emailData.storyTitle}</a>
+          Someone just rated <a href="${emailData.postLink}">${emailData.postTitle}</a>
         </p>
       </body>
     </html>`;

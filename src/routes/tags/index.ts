@@ -1,10 +1,10 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
 
-import StoryTagService from '@/services/StoryTagService';
-import StoryCategoryService from '@/services/StoryCategoryService';
+import StoryTagService from '@/services/PostTagService';
+import StoryCategoryService from '@/services/PostCategoryService';
 import { StoriesForIndexPage } from '@/interfaces/posts';
 import { getSlugFromString } from '@/lib/helpers';
-import StoryIndexPageService from '@/services/StoryIndexPageService';
+import StoryIndexPageService from '@/services/PostIndexPageService';
 import { FrontendScript } from '@/interfaces/routes';
 
 export default async (app: FastifyInstance) => {

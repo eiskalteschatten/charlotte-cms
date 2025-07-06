@@ -1,7 +1,7 @@
-import StoryIndexPageService from '@/services/StoryIndexPageService';
+import StoryIndexPageService from '@/services/PostIndexPageService';
 import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
-import StoryTagService from '@/services/StoryTagService';
-import StoryCategoryService from '@/services/StoryCategoryService';
+import StoryTagService from '@/services/PostTagService';
+import StoryCategoryService from '@/services/PostCategoryService';
 
 export default async (app: FastifyInstance) => {
   app.get('/', async (req: FastifyRequest, reply: FastifyReply) => {

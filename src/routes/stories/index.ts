@@ -1,11 +1,11 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
 
 import logger from '@/lib/logger';
-import StoryService from '@/services/StoryService';
-import StoryCommentService from '@/services/StoryCommentService';
-import StoryCategoryService from '@/services/StoryCategoryService';
-import StoryRatingService from '@/services/StoryRatingService';
-import StoryIndexPageService from '@/services/StoryIndexPageService';
+import StoryService from '@/services/PostService';
+import StoryCommentService from '@/services/PostCommentService';
+import StoryCategoryService from '@/services/PostCategoryService';
+import StoryRatingService from '@/services/PostRatingService';
+import StoryIndexPageService from '@/services/PostIndexPageService';
 import { FrontendScript } from '@/interfaces/routes';
 
 export default async (app: FastifyInstance) => {

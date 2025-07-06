@@ -1,12 +1,12 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
 
 import { EditStory } from '@/interfaces/posts';
-import StoryService from '@/services/StoryService';
+import StoryService from '@/services/PostService';
 import logger from '@/lib/logger';
 import Story from '@/db/models/Post';
-import StoryCategoryService from '@/services/StoryCategoryService';
-import StoryTagService from '@/services/StoryTagService';
-import StoryIndexPageService from '@/services/StoryIndexPageService';
+import StoryCategoryService from '@/services/PostCategoryService';
+import StoryTagService from '@/services/PostTagService';
+import StoryIndexPageService from '@/services/PostIndexPageService';
 import { FrontendScript } from '@/interfaces/routes';
 
 export default async (app: FastifyInstance) => {

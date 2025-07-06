@@ -1,8 +1,8 @@
 import AbstractEmailService from './AbstractEmailService';
 
 export interface EmailData {
-  storyTitle: string;
-  storyLink: string;
+  postTitle: string;
+  postLink: string;
 }
 
 export default class PublicationNotificationEmailService extends AbstractEmailService {
@@ -10,7 +10,7 @@ export default class PublicationNotificationEmailService extends AbstractEmailSe
     return `<html>
       <body>
         <p>
-          <b>A new story was just published:</b> <a href="${emailData.storyLink}">${emailData.storyTitle}</a>
+          <b>A new post was just published:</b> <a href="${emailData.postLink}">${emailData.postTitle}</a>
         </p>
       </body>
     </html>`;

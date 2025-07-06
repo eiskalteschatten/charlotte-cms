@@ -1,67 +1,67 @@
 import { Op, Sequelize, Transaction } from 'sequelize';
 
-import StoryTag from '@/db/models/PostTag';
+import PostTag from '@/db/models/PostTag';
 import { getSlugFromString } from '@/lib/helpers';
-import { StoryTagWithStoryCount } from '@/interfaces/posts';
+import { PostTagWithPostCount } from '@/interfaces/posts';
 
-export default class StoryTagService {
-  async getTagsForIndexPage(limit?: number): Promise<StoryTagWithStoryCount[]> {
-    const tags = await StoryTag.findAll({
+export default class PostTagService {
+  async getTagsForIndexPage(limit?: number): Promise<PostTagWithPostCount[]> {
+    const tags = await PostTag.findAll({
       attributes: [
         'tag',
         'slug',
         [Sequelize.literal(`(
           SELECT COUNT(*)
-          FROM story_tag_mapper AS mapper
-          WHERE mapper.fk_story_tag = \`StoryTag\`.id
-        )`), 'storyCount'],
+          FROM post_tag_mapper AS mapper
+          WHERE mapper.fk_post_tag = \`PostTag\`.id
+        )`), 'postCount'],
       ],
       limit,
       order: [['tag', 'ASC']],
       raw: true,
-    }) as unknown as StoryTagWithStoryCount[];
+    }) as unknown as PostTagWithPostCount[];
 
-    return tags.filter(tag => tag.storyCount > 0);
+    return tags.filter(tag => tag.postCount > 0);
   }
 
-  async getMostPopularTagsForIndexPage(limit?: number): Promise<StoryTagWithStoryCount[]> {
-    const tags = await StoryTag.findAll({
+  async getMostPopularTagsForIndexPage(limit?: number): Promise<PostTagWithPostCount[]> {
+    const tags = await PostTag.findAll({
       attributes: [
         'tag',
         'slug',
         [Sequelize.literal(`(
           SELECT COUNT(*)
-          FROM story_tag_mapper AS mapper
-          WHERE mapper.fk_story_tag = \`StoryTag\`.id
-        )`), 'storyCount'],
+          FROM post_tag_mapper AS mapper
+          WHERE mapper.fk_post_tag = \`PostTag\`.id
+        )`), 'postCount'],
       ],
       limit,
-      order: [['storyCount', 'DESC']],
+      order: [['postCount', 'DESC']],
       raw: true,
-    }) as unknown as StoryTagWithStoryCount[];
+    }) as unknown as PostTagWithPostCount[];
 
-    return tags.filter(tag => tag.storyCount > 0);
+    return tags.filter(tag => tag.postCount > 0);
   }
 
-  async getTagForTagPage(slug: string): Promise<StoryTag> {
-    return StoryTag.findOne({
+  async getTagForTagPage(slug: string): Promise<PostTag> {
+    return PostTag.findOne({
       where: { slug },
       attributes: ['id', 'tag'],
       raw: true,
     });
   }
 
-  async getTagsForEditStoryPage(): Promise<StoryTag[]> {
-    return StoryTag.findAll({
+  async getTagsForEditPostPage(): Promise<PostTag[]> {
+    return PostTag.findAll({
       attributes: ['tag'],
       order: [['tag', 'ASC']],
     });
   }
 
-  async bulkCreate(tags: string[], transaction?: Transaction): Promise<StoryTag[]> {
+  async bulkCreate(tags: string[], transaction?: Transaction): Promise<PostTag[]> {
     const normalizedTags = this.normalizeTags(tags);
 
-    const existingTags = await StoryTag.findAll({
+    const existingTags = await PostTag.findAll({
       where: {
         tag: {
           [Op.in]: normalizedTags,
@@ -79,10 +79,10 @@ export default class StoryTagService {
     }));
 
     if (createData.length > 0) {
-      await StoryTag.bulkCreate(createData, { transaction });
+      await PostTag.bulkCreate(createData, { transaction });
     }
 
-    return await StoryTag.findAll({
+    return await PostTag.findAll({
       where: {
         tag: {
           [Op.in]: normalizedTags,

@@ -2,7 +2,7 @@ import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
 
 import UserService from '@/services/UserService';
 import { UserStatus } from '@/interfaces/users';
-import StoryIndexPageService from '@/services/StoryIndexPageService';
+import StoryIndexPageService from '@/services/PostIndexPageService';
 
 export default async (app: FastifyInstance) => {
   app.get('/', async (req: FastifyRequest, reply: FastifyReply) => {

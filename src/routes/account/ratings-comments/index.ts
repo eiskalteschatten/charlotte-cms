@@ -1,7 +1,7 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
 
-import StoryCommentService from '@/services/StoryCommentService';
-import StoryRatingService from '@/services/StoryRatingService';
+import StoryCommentService from '@/services/PostCommentService';
+import StoryRatingService from '@/services/PostRatingService';
 
 export default async (app: FastifyInstance) => {
   app.get('/', async (req: FastifyRequest, reply: FastifyReply) => {
