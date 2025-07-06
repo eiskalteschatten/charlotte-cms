@@ -1,16 +1,16 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
 
-import StoryTagService from '@/services/PostTagService';
-import StoryCategoryService from '@/services/PostCategoryService';
-import { StoriesForIndexPage } from '@/interfaces/posts';
+import PostTagService from '@/services/PostTagService';
+import PostCategoryService from '@/services/PostCategoryService';
+import { PostsForIndexPage } from '@/interfaces/posts';
 import { getSlugFromString } from '@/lib/helpers';
-import StoryIndexPageService from '@/services/PostIndexPageService';
+import PostIndexPageService from '@/services/PostIndexPageService';
 import { FrontendScript } from '@/interfaces/routes';
 
 export default async (app: FastifyInstance) => {
   app.get('/', async (req: FastifyRequest, reply: FastifyReply) => {
-    const storyTagService = new StoryTagService();
-    const tags = await storyTagService.getTagsForIndexPage();
+    const postTagService = new PostTagService();
+    const tags = await postTagService.getTagsForIndexPage();
 
     return reply.view('tags/index.ejs', {
       title: 'Tags',
@@ -27,18 +27,18 @@ export default async (app: FastifyInstance) => {
     const slug = getSlugFromString(req.params.slug);
     const page = Number(req.query.page) || 1;
 
-    const storyCategoryService = new StoryCategoryService();
-    const categories = await storyCategoryService.getCategoriesForIndexPage();
+    const postCategoryService = new PostCategoryService();
+    const categories = await postCategoryService.getCategoriesForIndexPage();
 
-    const storyTagService = new StoryTagService();
-    const tag = await storyTagService.getTagForTagPage(slug);
-    const tags = await storyTagService.getTagsForIndexPage();
+    const postTagService = new PostTagService();
+    const tag = await postTagService.getTagForTagPage(slug);
+    const tags = await postTagService.getTagsForIndexPage();
 
-    let storiesForIndexPage: StoriesForIndexPage;
+    let postsForIndexPage: PostsForIndexPage;
 
     if (tag) {
-      const storyIndexPageService = new StoryIndexPageService();
-      storiesForIndexPage = await storyIndexPageService.getStoriesForTagPage(tag.id, page);
+      const postIndexPageService = new PostIndexPageService();
+      postsForIndexPage = await postIndexPageService.getPostsForTagPage(tag.id, page);
     }
 
     return reply.view('tags/tag.ejs', {
@@ -46,8 +46,8 @@ export default async (app: FastifyInstance) => {
       mainNavId: 'tags',
       tag,
       tags,
-      stories: storiesForIndexPage?.stories ?? [],
-      totalPages: storiesForIndexPage?.totalPages ?? 0,
+      posts: postsForIndexPage?.posts ?? [],
+      totalPages: postsForIndexPage?.totalPages ?? 0,
       currentPage: page,
       categories,
     });

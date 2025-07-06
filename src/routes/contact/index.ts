@@ -17,7 +17,7 @@ export default async (app: FastifyInstance) => {
 
       await contactEmailService.sendMail<EmailData>({
         to: 'tflabs@outlook.de',
-        subject: 'Email from TF Storytime',
+        subject: 'Email from TF Posttime',
         emailData: req.body,
       });
 

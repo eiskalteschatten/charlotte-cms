@@ -1,12 +1,12 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
 
-import StoryCategoryService from '@/services/PostCategoryService';
-import StoryIndexPageService from '@/services/PostIndexPageService';
+import PostCategoryService from '@/services/PostCategoryService';
+import PostIndexPageService from '@/services/PostIndexPageService';
 
 export default async (app: FastifyInstance) => {
   app.get('/', async (req: FastifyRequest, reply: FastifyReply) => {
-    const storyCategoryService = new StoryCategoryService();
-    const categories = await storyCategoryService.getCategoriesForIndexPage();
+    const postCategoryService = new PostCategoryService();
+    const categories = await postCategoryService.getCategoriesForIndexPage();
 
     return reply.view('categories/index.ejs', {
       title: 'Categories',
@@ -20,19 +20,19 @@ export default async (app: FastifyInstance) => {
     const { slug } = req.params;
     const page = Number(req.query.page) || 1;
 
-    const storyCategoryService = new StoryCategoryService();
-    const category = await storyCategoryService.getCategoryForCategoryPage(slug);
-    const categories = await storyCategoryService.getCategoriesForIndexPage();
+    const postCategoryService = new PostCategoryService();
+    const category = await postCategoryService.getCategoryForCategoryPage(slug);
+    const categories = await postCategoryService.getCategoriesForIndexPage();
 
-    const storyIndexPageService = new StoryIndexPageService();
-    const { stories, totalPages } = await storyIndexPageService.getStoriesForCategoryPage(category.id, page);
+    const postIndexPageService = new PostIndexPageService();
+    const { posts, totalPages } = await postIndexPageService.getPostsForCategoryPage(category.id, page);
 
     return reply.view('categories/category.ejs', {
       title: category.name,
       mainNavId: 'categories',
       category,
       categories,
-      stories,
+      posts,
       totalPages,
       currentPage: page,
     });

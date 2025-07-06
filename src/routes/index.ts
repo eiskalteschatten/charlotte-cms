@@ -1,24 +1,24 @@
-import StoryIndexPageService from '@/services/PostIndexPageService';
+import PostIndexPageService from '@/services/PostIndexPageService';
 import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
-import StoryTagService from '@/services/PostTagService';
-import StoryCategoryService from '@/services/PostCategoryService';
+import PostTagService from '@/services/PostTagService';
+import PostCategoryService from '@/services/PostCategoryService';
 
 export default async (app: FastifyInstance) => {
   app.get('/', async (req: FastifyRequest, reply: FastifyReply) => {
-    const storyIndexPageService = new StoryIndexPageService();
-    const { stories: latestStories } = await storyIndexPageService.getPublishedStoriesForIndexPage(1, 10);
-    const { stories: mostPopuplarStories } = await storyIndexPageService.getMostPopularStoriesForIndexPage(1, 10);
+    const postIndexPageService = new PostIndexPageService();
+    const { posts: latestPosts } = await postIndexPageService.getPublishedPostsForIndexPage(1, 10);
+    const { posts: mostPopuplarPosts } = await postIndexPageService.getMostPopularPostsForIndexPage(1, 10);
 
-    const storyTagService = new StoryTagService();
-    const tags = await storyTagService.getMostPopularTagsForIndexPage(35);
+    const postTagService = new PostTagService();
+    const tags = await postTagService.getMostPopularTagsForIndexPage(35);
 
-    const storyCategoryService = new StoryCategoryService();
-    const categories = await storyCategoryService.getCategoriesForIndexPage();
+    const postCategoryService = new PostCategoryService();
+    const categories = await postCategoryService.getCategoriesForIndexPage();
 
     return reply.view('home.ejs', {
       mainNavId: 'home',
-      latestStories,
-      mostPopuplarStories,
+      latestPosts,
+      mostPopuplarPosts,
       tags,
       categories,
     });

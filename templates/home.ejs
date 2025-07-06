@@ -5,7 +5,7 @@
 
       <div>
         <h1 class="top-text">Welcome to TF Labs!</h1>
-        <p class="headline-description">TF Labs is a platform that features transformation stories of all sorts. Characters turn into objects, animals, or plants, undergo fantastical changes like inflating, flattening, and expanding, and much more &mdash; the imagination is the limit!</p>
+        <p class="headline-description">TF Labs is a platform that features transformation posts of all sorts. Characters turn into objects, animals, or plants, undergo fantastical changes like inflating, flattening, and expanding, and much more &mdash; the imagination is the limit!</p>
         <p><a href="/about" class="has-icon">Read more<span class="material-icons">arrow_forward</span></a></p>
         </span></a></p>
       </div>
@@ -13,8 +13,8 @@
 
     <div class="col-lg-4 d-flex align-items-center justify-content-center">
       <div>
-        <a class="button primary large js-track-click-event" href="/account/stories/submit/" data-tracking-action="Homepage" data-tracking-name="Submit a Story">
-          <span class="material-icons">add</span> Submit a Story
+        <a class="button primary large js-track-click-event" href="/account/posts/submit/" data-tracking-action="Homepage" data-tracking-name="Submit a Post">
+          <span class="material-icons">add</span> Submit a Post
         </a>
       </div>
     </div>
@@ -22,15 +22,15 @@
 
   <section class="row section">
     <div class="col-lg-6 mb-5 mb-md-0">
-      <h2 class="mb-4">Latest Stories</h2>
-      <%- include('./_partials/storyIndex.ejs', { stories: latestStories }) %>
+      <h2 class="mb-4">Latest Posts</h2>
+      <%- include('./_partials/postIndex.ejs', { posts: latestPosts }) %>
     </div>
     <div class="col-lg-6">
-      <h2 class="mb-4">Most Popular Stories</h2>
-      <%- include('./_partials/storyIndex.ejs', { stories: mostPopuplarStories }) %>
+      <h2 class="mb-4">Most Popular Posts</h2>
+      <%- include('./_partials/postIndex.ejs', { posts: mostPopuplarPosts }) %>
     </div>
     <div class="col-12 text-center mt-5">
-      <a href="/stories" class="button primary">Browse Stories <span class="material-icons">arrow_forward</span></a>
+      <a href="/posts" class="button primary">Browse Posts <span class="material-icons">arrow_forward</span></a>
     </div>
   </section>
 

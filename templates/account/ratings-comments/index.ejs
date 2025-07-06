@@ -17,11 +17,11 @@
           <% if (typeof comments === 'undefined' || comments.length === 0) { %>
             <div class="rounded-box">No comments found.</div>
           <% } else { %>
-            <div class="story-comments d-flex flex-column gap-3">
+            <div class="post-comments d-flex flex-column gap-3">
               <% for (const comment of comments) { %>
                 <div class="comment rounded-box">
                   <div class="d-flex align-items-center justify-content-between mb-2">
-                    <a href="/stories/<%= comment.story.slug %>/"><%= comment.story.title %></a>
+                    <a href="/posts/<%= comment.post.slug %>/"><%= comment.post.title %></a>
                     <span class="comment-date"><%= helpers.formatLocaleDateDigits(comment.createdAt) %></span>
                   </div>
                   <div><%= comment.comment %></div>
@@ -36,10 +36,10 @@
           <% if (typeof ratings === 'undefined' || ratings.length === 0) { %>
             <div class="rounded-box">No ratings found.</div>
           <% } else { %>
-            <div class="story-ratings account-page d-flex flex-column gap-3">
+            <div class="post-ratings account-page d-flex flex-column gap-3">
               <% for (const rating of ratings) { %>
                 <div class="rating-star-wrapper rounded-box">
-                  <a href="/stories/<%= rating.story.slug %>/" class="d-block"><%= rating.story.title %></a>
+                  <a href="/posts/<%= rating.post.slug %>/" class="d-block"><%= rating.post.title %></a>
 
                   <div class="d-inline-flex align-items-center gap-1">
                     <div class="rating-star <% if (rating.rating >= 1) { %>filled<% } %>" data-rating="1">

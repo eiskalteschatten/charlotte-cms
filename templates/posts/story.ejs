@@ -1,16 +1,16 @@
 <div class="container-fluid container-xxl">
-  <div class="row" id="story" data-id="<%= story.id %>">
+  <div class="row" id="post" data-id="<%= post.id %>">
     <div class="col-lg-8">
       <div class="mb-4">
         <h1 class="page-title pb-0"><%= title %></h1>
 
-        <div class="story-author">
-          by <a href="/authors/<%= story.user.username %>/"><%= story.user.username %></a>
+        <div class="post-author">
+          by <a href="/authors/<%= post.user.username %>/"><%= post.user.username %></a>
         </div>
       </div>
 
       <div class="mb-5">
-        <%- story.renderedStory %>
+        <%- post.renderedPost %>
       </div>
 
       <!-- next and previous parts of series -->
@@ -18,26 +18,26 @@
     <div class="col-lg-4 mt-3 mt-lg-0">
       <div class="sidebar">
         <div class="sidebar-block">
-          <h4 class="sidebar-block-header">Story Info</h4>
+          <h4 class="sidebar-block-header">Post Info</h4>
           <div class="sidebar-block-content">
-            <%= story.shortDescription %>
+            <%= post.shortDescription %>
           </div>
 
           <div class="sidebar-block-content">
-            <% if (story.status === 'published') { %>
-              Published on <%= helpers.formatLocaleDateDigits(story.publishedAt) %>
+            <% if (post.status === 'published') { %>
+              Published on <%= helpers.formatLocaleDateDigits(post.publishedAt) %>
             <% } else { %>
-              This story is a draft and was last updated on <%= helpers.formatLocaleDateDigits(story.updatedAt) %>.
+              This post is a draft and was last updated on <%= helpers.formatLocaleDateDigits(post.updatedAt) %>.
             <% } %>
           </div>
 
-          <%- include('../_partials/storyStats.ejs', { story, noAdditionalTags: true }) %>
+          <%- include('../_partials/postStats.ejs', { post, noAdditionalTags: true }) %>
         </div>
 
         <div class="sidebar-block">
           <h4 class="sidebar-block-header">Categories</h4>
           <div class="sidebar-block-content d-flex flex-wrap gap-2">
-            <% for (const category of story.categories) { %>
+            <% for (const category of post.categories) { %>
               <a href="/categories/<%= category.slug %>/" class="badge small"><%= category.name %></a>
             <% } %>
           </div>
@@ -46,7 +46,7 @@
         <div class="sidebar-block">
           <h4 class="sidebar-block-header">Tags</h4>
           <div class="sidebar-block-content d-flex flex-wrap gap-2">
-            <% for (const tag of story.tags) { %>
+            <% for (const tag of post.tags) { %>
               <a href="/tags/<%= tag.slug %>/" class="badge small"><%= tag.tag %></a>
             <% } %>
           </div>
@@ -58,39 +58,39 @@
   </div>
 
   <div class="col-lg-8 mt-5 mt-lg-0">
-    <% if (story.openForRatings) { %>
-      <div class="story-ratings mb-5">
-        <h2 class="mb-3">Rate This Story</h2>
-        <div class="d-inline-flex align-items-center gap-2" id="storyRatingStars" <% if (typeof user !== 'undefined') { %>data-logged-in="true"<% } %>>
-          <div class="rating-star <% if (story.averageRating > 0.5) { %>filled<% } %>" data-rating="1">
+    <% if (post.openForRatings) { %>
+      <div class="post-ratings mb-5">
+        <h2 class="mb-3">Rate This Post</h2>
+        <div class="d-inline-flex align-items-center gap-2" id="postRatingStars" <% if (typeof user !== 'undefined') { %>data-logged-in="true"<% } %>>
+          <div class="rating-star <% if (post.averageRating > 0.5) { %>filled<% } %>" data-rating="1">
             <span class="material-icons">star</span>
           </div>
-          <div class="rating-star <% if (story.averageRating > 1.5) { %>filled<% } %>" data-rating="2">
+          <div class="rating-star <% if (post.averageRating > 1.5) { %>filled<% } %>" data-rating="2">
             <span class="material-icons">star</span>
           </div>
-          <div class="rating-star <% if (story.averageRating > 2.5) { %>filled<% } %>" data-rating="3">
+          <div class="rating-star <% if (post.averageRating > 2.5) { %>filled<% } %>" data-rating="3">
             <span class="material-icons">star</span>
           </div>
-          <div class="rating-star <% if (story.averageRating > 3.5) { %>filled<% } %>" data-rating="4">
+          <div class="rating-star <% if (post.averageRating > 3.5) { %>filled<% } %>" data-rating="4">
             <span class="material-icons">star</span>
           </div>
-          <div class="rating-star <% if (story.averageRating > 4.5) { %>filled<% } %>" data-rating="5">
+          <div class="rating-star <% if (post.averageRating > 4.5) { %>filled<% } %>" data-rating="5">
             <span class="material-icons">star</span>
           </div>
         </div>
       </div>
     <% } %>
 
-    <% if (story.openForComments) { %>
+    <% if (post.openForComments) { %>
       <div>
         <h2 class="mb-3">Comments</h2>
 
         <% if (typeof user !== 'undefined') { %>
           <div class="mb-5">
-            <form id="comment-form" method="post" action="/stories/<%= story.slug %>/comments/post">
-              <input type="hidden" name="storyId" value="<%= story.id %>">
+            <form id="comment-form" method="post" action="/posts/<%= post.slug %>/comments/post">
+              <input type="hidden" name="postId" value="<%= post.id %>">
               <div class="form-group">
-                <textarea name="comment" rows="4" placeholder="What did you think of the story?" class="input full-width" required></textarea>
+                <textarea name="comment" rows="4" placeholder="What did you think of the post?" class="input full-width" required></textarea>
               </div>
               <button class="button primary large" id="postCommentButton" is="loader-button">
                 <span class="loading-button-label">Post Comment</span>
@@ -98,12 +98,12 @@
             </form>
           </div>
         <% } else { %>
-          <div class="comment mb-5">You must be logged in to comment on this story. <a href="/auth/login/" target="_blank">Login</a> or <a href="/auth/register/" target="_blank">Register</a></div>
+          <div class="comment mb-5">You must be logged in to comment on this post. <a href="/auth/login/" target="_blank">Login</a> or <a href="/auth/register/" target="_blank">Register</a></div>
         <% } %>
 
-        <div class="story-comments d-flex flex-column gap-3" id="comments">
-          <% if (story.comments.length > 0) { %>
-            <% for (const comment of story.comments) { %>
+        <div class="post-comments d-flex flex-column gap-3" id="comments">
+          <% if (post.comments.length > 0) { %>
+            <% for (const comment of post.comments) { %>
               <div class="comment rounded-box">
                 <div class="d-flex align-items-center justify-content-between mb-2">
                   <a href="/authors/<%= comment.user.username %>/"><%= comment.user.username %></a>

@@ -1,36 +1,36 @@
-<% if (stories.length === 0) { %>
+<% if (posts.length === 0) { %>
   <div class="d-flex flex-column align-items-center gap-4 py-4 rounded-box">
-    <div>No stories could be found.</div>
+    <div>No posts could be found.</div>
     <div>
-      <a href="/account/stories/submit/" class="button primary"><span class="material-icons">add</span> Submit a Story</a>
+      <a href="/account/posts/submit/" class="button primary"><span class="material-icons">add</span> Submit a Post</a>
     </div>
   </div>
 <% } else { %>
-  <div class="story-list">
-    <% for (const story of stories) { %>
-      <div class="story-block rounded-box">
-        <a href="/stories/<%= story.slug %>/" class="story-title"><%= story.title %></a>
+  <div class="post-list">
+    <% for (const post of posts) { %>
+      <div class="post-block rounded-box">
+        <a href="/posts/<%= post.slug %>/" class="post-title"><%= post.title %></a>
 
-        <div class="story-description-wrapper">
-          <% if (story.isErotic) { %>
+        <div class="post-description-wrapper">
+          <% if (post.isErotic) { %>
             <div>
-              <%- include('../_partials/story-tags/eighteenPlus.ejs') %>
+              <%- include('../_partials/post-tags/eighteenPlus.ejs') %>
             </div>
           <% } %>
-          <div class="story-description"><%= story.shortDescription %></div>
+          <div class="post-description"><%= post.shortDescription %></div>
         </div>
 
-        <div class="story-author-wrapper">
-          <div class="story-author">by <a href="/authors/<%= story.user.username %>/"><%= story.user.username %></a></div>
-          <div class="story-publication-date"><%= helpers.formatLocaleDateDigits(story.publishedAt) %></div>
+        <div class="post-author-wrapper">
+          <div class="post-author">by <a href="/authors/<%= post.user.username %>/"><%= post.user.username %></a></div>
+          <div class="post-publication-date"><%= helpers.formatLocaleDateDigits(post.publishedAt) %></div>
         </div>
 
         <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-md-between">
-          <%- include('../_partials/storyStats.ejs', { story }) %>
+          <%- include('../_partials/postStats.ejs', { post }) %>
 
-          <div class="story-categories">
-            <% for (const category of story.categories) { %>
-              <a href="/categories/<%= category.slug %>/"><%= category.name %></a><% if (story.categories.indexOf(category) !== story.categories.length - 1) { %>,<% } %>
+          <div class="post-categories">
+            <% for (const category of post.categories) { %>
+              <a href="/categories/<%= category.slug %>/"><%= category.name %></a><% if (post.categories.indexOf(category) !== post.categories.length - 1) { %>,<% } %>
             <% } %>
           </div>
         </div>

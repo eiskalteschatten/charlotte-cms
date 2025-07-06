@@ -1,0 +1,65 @@
+<div class="container-fluid container-xxl">
+  <h1 class="page-title"><%= title %></h1>
+
+  <div class="row">
+    <div class="col-lg-3 d-none d-lg-block">
+      <div class="sidebar right-sidebar">
+        <div class="sidebar-block">
+          <%- include('../../_partials/accountSidebarMenu.ejs') %>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-9">
+      <% if (posts.length === 0) { %>
+        <div class="d-flex flex-column align-items-center gap-4 py-4 rounded-box">
+          <div>You have not submitted any posts yet.</div>
+          <div>
+            <a href="/account/posts/submit/" class="button primary"><span class="material-icons">add</span> Submit a Post</a>
+          </div>
+        </div>
+      <% } else { %>
+        <div class="post-list my-posts">
+          <% for (const post of posts) { %>
+            <div class="post-block rounded-box">
+              <div class="d-flex align-items-center justify-content-between">
+                <a href="/account/posts/edit/<%= post.id %>/" class="post-title"><%= post.title %></a>
+                <% if (post.status === 'draft') { %>
+                  <a href="/posts/<%= post.slug %>/?preview=true" target="_blank" class="post-action-button body-color"><span class="material-icons">open_in_new</span></a>
+                <% } else { %>
+                  <a href="/posts/<%= post.slug %>/" target="_blank" class="post-action-button body-color"><span class="material-icons">open_in_new</span></a>
+                <% } %>
+              </div>
+
+              <div class="post-description-wrapper">
+                <% if (post.isErotic) { %>
+                  <%- include('../../_partials/post-tags/eighteenPlus.ejs') %>
+                <% } %>
+                <div class="post-description"><%= post.shortDescription %></div>
+              </div>
+
+              <div class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-sm-between">
+                <%- include('../../_partials/postStats.ejs', { post, noAdditionalTags: true }) %>
+
+                <div class="post-categories">
+                  <% for (const category of post.categories) { %>
+                    <a href="/categories/<%= category.slug %>/"><%= category.name %></a><% if (post.categories.indexOf(category) !== post.categories.length - 1) { %>,<% } %>
+                  <% } %>
+                </div>
+              </div>
+
+              <div class="post-status">
+                <% if (post.status === 'published') { %>
+                  <strong>Published</strong> on <%= helpers.formatLocaleDateTime(post.publishedAt) %>
+                <% } else { %>
+                  <strong class="text-capitalize"><%= post.status %></strong>
+                <% } %>
+              </div>
+            </div>
+
+            <%- include('../../_partials/pagination.ejs') %>
+          <% } %>
+        </div>
+      <% } %>
+    </div>
+  </div>
+</div>

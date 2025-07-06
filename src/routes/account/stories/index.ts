@@ -1,12 +1,12 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
 
-import { EditStory } from '@/interfaces/posts';
-import StoryService from '@/services/PostService';
+import { EditPost } from '@/interfaces/posts';
+import PostService from '@/services/PostService';
 import logger from '@/lib/logger';
-import Story from '@/db/models/Post';
-import StoryCategoryService from '@/services/PostCategoryService';
-import StoryTagService from '@/services/PostTagService';
-import StoryIndexPageService from '@/services/PostIndexPageService';
+import Post from '@/db/models/Post';
+import PostCategoryService from '@/services/PostCategoryService';
+import PostTagService from '@/services/PostTagService';
+import PostIndexPageService from '@/services/PostIndexPageService';
 import { FrontendScript } from '@/interfaces/routes';
 
 export default async (app: FastifyInstance) => {
@@ -17,13 +17,13 @@ export default async (app: FastifyInstance) => {
     }
 
     const page = Number(req.query.page) || 1;
-    const storyIndexPageService = new StoryIndexPageService();
-    const { stories, totalPages } = await storyIndexPageService.getStoriesForMyStories(req.session.get('user').id, page);
+    const postIndexPageService = new PostIndexPageService();
+    const { posts, totalPages } = await postIndexPageService.getPostsForMyPosts(req.session.get('user').id, page);
 
-    return reply.view('account/stories/index.ejs', {
-      title: 'My Stories',
-      sidebarMenuId: 'myStories',
-      stories,
+    return reply.view('account/posts/index.ejs', {
+      title: 'My Posts',
+      sidebarMenuId: 'myPosts',
+      posts,
       currentPage: page,
       totalPages,
     });
@@ -34,89 +34,89 @@ export default async (app: FastifyInstance) => {
       return reply.redirect('/auth/register');
     }
 
-    const storyCategoryService = new StoryCategoryService();
-    const categories = await storyCategoryService.getCategoriesForEditStoryPage();
+    const postCategoryService = new PostCategoryService();
+    const categories = await postCategoryService.getCategoriesForEditPostPage();
 
-    return reply.view('account/stories/editStory.ejs', {
-      title: 'Submit a Story',
+    return reply.view('account/posts/editPost.ejs', {
+      title: 'Submit a Post',
       categories,
       scripts: [
-        { name: reply.locals.webpackManifest['editStory.js'], loadingMethod: 'async' },
+        { name: reply.locals.webpackManifest['editPost.js'], loadingMethod: 'async' },
       ] as FrontendScript[],
     });
   });
 
   app.get('/edit', (req: FastifyRequest, reply: FastifyReply) => {
-    return reply.redirect('/account/stories/submit');
+    return reply.redirect('/account/posts/submit');
   });
 
   app.get('/edit/tags', async (req: FastifyRequest, reply: FastifyReply) => {
-    const storyTagService = new StoryTagService();
-    const tags = await storyTagService.getTagsForEditStoryPage();
+    const postTagService = new PostTagService();
+    const tags = await postTagService.getTagsForEditPostPage();
     return reply.send(tags.map(({ tag }) => tag));
   });
 
-  type EditRequest = FastifyRequest<{ Params: { storyId: string } }>;
-  app.get('/edit/:storyId', async (req: EditRequest, reply: FastifyReply) => {
+  type EditRequest = FastifyRequest<{ Params: { postId: string } }>;
+  app.get('/edit/:postId', async (req: EditRequest, reply: FastifyReply) => {
     if (req.isUnauthenticated()) {
       return reply.redirect('/auth/login');
     }
 
-    const storyId = Number(req.params.storyId);
-    const storyService = new StoryService();
-    const story = await storyService.getStoryForEditing(storyId, req.session.get('user').id);
-    const tags = story.tags.map(tag => tag.tag).join(', ');
+    const postId = Number(req.params.postId);
+    const postService = new PostService();
+    const post = await postService.getPostForEditing(postId, req.session.get('user').id);
+    const tags = post.tags.map(tag => tag.tag).join(', ');
 
-    const storyCategoryService = new StoryCategoryService();
-    const categories = await storyCategoryService.getCategoriesForEditStoryPage();
+    const postCategoryService = new PostCategoryService();
+    const categories = await postCategoryService.getCategoriesForEditPostPage();
 
-    return reply.view('account/stories/editStory.ejs', {
-      title: `Edit ${story.title}`,
-      story,
+    return reply.view('account/posts/editPost.ejs', {
+      title: `Edit ${post.title}`,
+      post,
       tags,
       categories,
-      sidebarMenuId: 'myStories',
+      sidebarMenuId: 'myPosts',
       scripts: [
-        { name: reply.locals.webpackManifest['editStory.js'], loadingMethod: 'async' },
+        { name: reply.locals.webpackManifest['editPost.js'], loadingMethod: 'async' },
       ] as FrontendScript[],
     });
   });
 
-  type SaveRequest = FastifyRequest<{ Body: EditStory }>;
+  type SaveRequest = FastifyRequest<{ Body: EditPost }>;
   app.post('/save', { onRequest: app.csrfProtection }, async (req: SaveRequest, reply: FastifyReply) => {
     if (req.isUnauthenticated()) {
       return reply.status(401).send('Unauthorized');
     }
 
-    let story: Story;
+    let post: Post;
 
     try {
-      const storyService = new StoryService();
-      story = await storyService.saveStory(req.body, req.session.get('user').id);
+      const postService = new PostService();
+      post = await postService.savePost(req.body, req.session.get('user').id);
     }
     catch (error) {
       logger.error(error);
-      return reply.status(500).send('An error occurred while saving the story.');
+      return reply.status(500).send('An error occurred while saving the post.');
     }
 
-    return reply.send(story);
+    return reply.send(post);
   });
 
-  type DeleteRequest = FastifyRequest<{ Params: { storyId: string } }>;
-  app.delete('/delete/:storyId', async (req: DeleteRequest, reply: FastifyReply) => {
+  type DeleteRequest = FastifyRequest<{ Params: { postId: string } }>;
+  app.delete('/delete/:postId', async (req: DeleteRequest, reply: FastifyReply) => {
     if (req.isUnauthenticated()) {
       return reply.status(401).send('Unauthorized');
     }
 
-    const storyId = Number(req.params.storyId);
+    const postId = Number(req.params.postId);
 
     try {
-      const storyService = new StoryService();
-      await storyService.deleteStory(storyId, req.session.get('user').id);
+      const postService = new PostService();
+      await postService.deletePost(postId, req.session.get('user').id);
     }
     catch (error) {
       logger.error(error);
-      return reply.status(500).send('An error occurred while deleting the story.');
+      return reply.status(500).send('An error occurred while deleting the post.');
     }
 
     return reply.status(201).send();

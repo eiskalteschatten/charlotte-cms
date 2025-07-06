@@ -1,7 +1,7 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
 
-import StoryCommentService from '@/services/PostCommentService';
-import StoryRatingService from '@/services/PostRatingService';
+import PostCommentService from '@/services/PostCommentService';
+import PostRatingService from '@/services/PostRatingService';
 
 export default async (app: FastifyInstance) => {
   app.get('/', async (req: FastifyRequest, reply: FastifyReply) => {
@@ -9,11 +9,11 @@ export default async (app: FastifyInstance) => {
       return reply.status(401).send('Unauthorized');
     }
 
-    const storyCommentService = new StoryCommentService();
-    const comments = await storyCommentService.getCommentsForUser(req.session.get('user').id);
+    const postCommentService = new PostCommentService();
+    const comments = await postCommentService.getCommentsForUser(req.session.get('user').id);
 
-    const storyRatingService = new StoryRatingService();
-    const ratings = await storyRatingService.getRatingsForUser(req.session.get('user').id);
+    const postRatingService = new PostRatingService();
+    const ratings = await postRatingService.getRatingsForUser(req.session.get('user').id);
 
     return reply.view('account/ratings-comments/index.ejs', {
       title: 'My Ratings and Comments',

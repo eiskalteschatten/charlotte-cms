@@ -2,11 +2,11 @@ import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
 
 import UserService from '@/services/UserService';
 import { UserStatus } from '@/interfaces/users';
-import StoryIndexPageService from '@/services/PostIndexPageService';
+import PostIndexPageService from '@/services/PostIndexPageService';
 
 export default async (app: FastifyInstance) => {
   app.get('/', async (req: FastifyRequest, reply: FastifyReply) => {
-    return reply.redirect('/stories/');
+    return reply.redirect('/posts/');
   });
 
   type ProfilePageRequest = FastifyRequest<{ Params: { username: string }; Querystring: { page?: string } }>;
@@ -20,14 +20,14 @@ export default async (app: FastifyInstance) => {
       return reply.callNotFound();
     }
 
-    const storyIndexPageService = new StoryIndexPageService();
-    const { stories, totalPages } = await storyIndexPageService.getPublishedStoriesForUserProfilePage(userProfile.id, page);
+    const postIndexPageService = new PostIndexPageService();
+    const { posts, totalPages } = await postIndexPageService.getPublishedPostsForUserProfilePage(userProfile.id, page);
 
     return reply.view('authors/index.ejs', {
       title: userProfile.username,
       userProfile,
       currentPage: page,
-      stories,
+      posts,
       totalPages,
     });
   });

@@ -10,32 +10,32 @@
       </div>
     </div>
     <div class="col-lg-9">
-      <form class="d-flex gap-3 flex-column" id="editStoryForm">
-        <div class="edit-story-field-required">All fields are required unless otherwise specified. Please see our <a href="/documents/submission-guidelines/" target="_blank">Submission Guidelines</a> for more information about how to post a story.</div>
+      <form class="d-flex gap-3 flex-column" id="editPostForm">
+        <div class="edit-post-field-required">All fields are required unless otherwise specified. Please see our <a href="/documents/submission-guidelines/" target="_blank">Submission Guidelines</a> for more information about how to post a post.</div>
 
-        <input type="hidden" id="id" name="id" value="<%= typeof story !== 'undefined' ? story.id : '' %>">
+        <input type="hidden" id="id" name="id" value="<%= typeof post !== 'undefined' ? post.id : '' %>">
 
         <div class="form-group">
           <label for="title" class="form-label">Title</label>
-          <input type="text" id="title" name="title" required class="input full-width js-input" value="<%= typeof story !== 'undefined' ? story.title : '' %>">
-          <% if (typeof story !== 'undefined') { %>
+          <input type="text" id="title" name="title" required class="input full-width js-input" value="<%= typeof post !== 'undefined' ? post.title : '' %>">
+          <% if (typeof post !== 'undefined') { %>
             <div class="form-field-note">
-              Note: changing the title will change the URL of the story and will break any bookmarks or links to the story.
+              Note: changing the title will change the URL of the post and will break any bookmarks or links to the post.
             </div>
           <% } %>
         </div>
 
         <div class="form-group">
           <label for="shortDescription" class="form-label">Short Description (max. length 100 characters)</label>
-          <input type="text" id="shortDescription" name="shortDescription" required class="input full-width js-input" maxlength="100" value="<%= typeof story !== 'undefined' ? story.shortDescription : '' %>">
+          <input type="text" id="shortDescription" name="shortDescription" required class="input full-width js-input" maxlength="100" value="<%= typeof post !== 'undefined' ? post.shortDescription : '' %>">
           <div class="form-field-note">
-            This will be displayed on the story list page.
+            This will be displayed on the post list page.
           </div>
         </div>
 
         <div class="form-group">
-          <label for="storyEditor" class="form-label">Story</label>
-          <textarea id="storyEditor" name="story" class="input full-width js-input" rows="10" required><%= typeof story !== 'undefined' ? story.content : '' %></textarea>
+          <label for="postEditor" class="form-label">Post</label>
+          <textarea id="postEditor" name="post" class="input full-width js-input" rows="10" required><%= typeof post !== 'undefined' ? post.content : '' %></textarea>
           <div class="form-field-note d-flex justify-content-between">
             <div>Allowed Markdown for formatting: <strong>**bold**</strong> <em>*italics*</em></div>
             <div>Words: <span id="wordCount">0</span> <span class="low-opacity-text">(minimum: 750)</span></div>
@@ -46,16 +46,16 @@
           <div class="row">
             <div class="col-sm-6 mb-4 mb-sm-0">
               <div class="form-label">Categories</div>
-              <div class="edit-story-categories">
+              <div class="edit-post-categories">
                 <% for (const category of categories) { %>
                   <div class="d-flex align-items-center gap-2">
-                    <input type="checkbox" name="categories" class="input js-checkbox" value="<%= category.id %>" <% if (typeof story !== 'undefined' && story.categories.map(c => c.id).includes(category.id)) { %>checked<% } %>>
+                    <input type="checkbox" name="categories" class="input js-checkbox" value="<%= category.id %>" <% if (typeof post !== 'undefined' && post.categories.map(c => c.id).includes(category.id)) { %>checked<% } %>>
                     <label for="categories"><%= category.name %></label>
                   </div>
                 <% } %>
               </div>
               <div class="form-field-note">
-                You can select multiple categories.<br>If you have a suggestion for a new category, please <a href="/contact" target="_blank" class="js-track-click-event" data-tracking-action="Edit Story Page" data-tracking-name="Contact Us For New Category">contact us</a>.
+                You can select multiple categories.<br>If you have a suggestion for a new category, please <a href="/contact" target="_blank" class="js-track-click-event" data-tracking-action="Edit Post Page" data-tracking-name="Contact Us For New Category">contact us</a>.
               </div>
             </div>
             <div class="col-sm-6">
@@ -71,71 +71,71 @@
 
         <div class="form-group">
           <label for="noteToAdmin" class="form-label">Note To Admin (optional; will not be published)</label>
-          <textarea id="noteToAdmin" name="noteToAdmin" class="input full-width js-input" rows="5"><%= typeof story !== 'undefined' ? story.noteToAdmin : '' %></textarea>
+          <textarea id="noteToAdmin" name="noteToAdmin" class="input full-width js-input" rows="5"><%= typeof post !== 'undefined' ? post.noteToAdmin : '' %></textarea>
         </div>
 
         <div class="form-group d-flex gap-5">
           <div class="d-flex align-items-center gap-2">
-            <input type="checkbox" id="openForComments" name="openForComments" class="input js-checkbox" <% if (typeof story === 'undefined' || (typeof story !== 'undefined' && story.openForComments === true)) { %>checked<% } %>>
+            <input type="checkbox" id="openForComments" name="openForComments" class="input js-checkbox" <% if (typeof post === 'undefined' || (typeof post !== 'undefined' && post.openForComments === true)) { %>checked<% } %>>
             <label for="openForComments">Allow&nbsp;Comments</label>
           </div>
           <div class="d-flex align-items-center gap-2">
-            <input type="checkbox" id="openForRatings" name="openForRatings" class="input js-checkbox" <% if (typeof story === 'undefined' || (typeof story !== 'undefined' && story.openForRatings === true)) { %>checked<% } %>>
+            <input type="checkbox" id="openForRatings" name="openForRatings" class="input js-checkbox" <% if (typeof post === 'undefined' || (typeof post !== 'undefined' && post.openForRatings === true)) { %>checked<% } %>>
             <label for="openForRatings">Allow&nbsp;Ratings</label>
           </div>
         </div>
 
         <div class="form-group d-flex align-items-center gap-2">
-          <input type="checkbox" id="isErotic" name="isErotic" class="input js-checkbox" <% if (typeof story !== 'undefined' && story.isErotic === true) { %>checked<% } %>>
-          <label for="isErotic">This story is for mature audiences only (18+).</label>
+          <input type="checkbox" id="isErotic" name="isErotic" class="input js-checkbox" <% if (typeof post !== 'undefined' && post.isErotic === true) { %>checked<% } %>>
+          <label for="isErotic">This post is for mature audiences only (18+).</label>
         </div>
 
         <div class="form-group">
           <label for="status" class="form-label">Status</label>
           <select id="status" name="status" class="input full-width">
             <option value="draft">Draft</option>
-            <option value="published" <% if (typeof story !== 'undefined' && story.status === 'published') { %>selected<% } %>>Published</option>
+            <option value="published" <% if (typeof post !== 'undefined' && post.status === 'published') { %>selected<% } %>>Published</option>
           </select>
         </div>
 
-        <div class="form-group rounded-box with-border <% if (typeof story === 'undefined' || story.status !== 'published') { %>d-none<% } %>" id="submissionAgreementWrapper">
+        <div class="form-group rounded-box with-border <% if (typeof post === 'undefined' || post.status !== 'published') { %>d-none<% } %>" id="submissionAgreementWrapper">
           <div class="mb-3">
             I am the legal copyright owner of this work. I grant TF Labs a non-exclusive license to publish this work. I retain full copyright to my work after publication. I have read and agreed to the site <a href="/documents/terms-of-service/" target="_blank">Terms of Service</a> and <a href="/documents/content-guidelines/" target="_blank">Content Guidelines</a> and I agree to the full submission agreement.
           </div>
           <div class="d-flex align-items-center gap-2">
-            <input type="checkbox" id="submissionAgreement" name="submissionAgreement" class="input js-checkbox" <% if (typeof story !== 'undefined' && story.submissionAgreement === true) { %>checked<% } %>>
+            <input type="checkbox" id="submissionAgreement" name="submissionAgreement" class="input js-checkbox" <% if (typeof post !== 'undefined' && post.submissionAgreement === true) { %>checked<% } %>>
             <label for="submissionAgreement" class="fw-bold">I agree</label>
           </div>
         </div>
 
         <div class="d-flex align-items-center justify-content-between">
           <div>
-            <button class="button primary large" id="saveStoryButton" is="loader-button">
+            <button class="button primary large" id="savePostButton" is="loader-button">
               <span class="loading-button-label">
-                <% if (typeof story !== 'undefined' && story.status === 'published') { %>
-                  Update Story
+                <% if (typeof post !== 'undefined' && post.status === 'published') { %>
+                  Update Post
                 <% } else { %>
                   Save as Draft
                 <% } %>
               </span>
             </button>
 
-            <% if (typeof story !== 'undefined') { %>
-              <% var isPreview = story.status !== 'published'; %>
-              <a href="/stories/<%= story.slug %><% if (isPreview) { %>?preview=true<% } %>" target="_blank" class="button large" id="previewStoryButton">
+            <% if (typeof post !== 'undefined') { %>
+              <% var isPreview = post.status !== 'published'; %>
+              <a href="/posts/<%= post.slug %><% if (isPreview) { %>?preview=true<% } %>" target="_blank" class="button large" id="previewPostButton">
                 <% if (!isPreview) { %>
-                  View Story
+                  View Post
                 <% } else { %>
-                  Preview Story
+                  Preview Post
                 <% } %>
               </a>
             <% } %>
           </div>
 
-          <% if (typeof story !== 'undefined') { %>
-            <button class="button icon-button delete-button large" id="deleteStoryButton" is="loader-button">
+          <% if (typeof post !== 'undefined') { %>
+            <button class="button icon-button delete-button large" id="deletePostButton" is="loader-button">
               <span class="loading-button-label">
-                Delete Story
+                Delete Post
               </span>
             </button>
           <% } %>

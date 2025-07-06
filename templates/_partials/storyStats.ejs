@@ -1,16 +1,16 @@
-<div class="story-stats">
+<div class="post-stats">
   <% if (typeof noAdditionalTags === 'undefined' || !noAdditionalTags) { %>
-    <% if (helpers.isWithinLastTwoWeeks(story.publishedAt)) { %>
+    <% if (helpers.isWithinLastTwoWeeks(post.publishedAt)) { %>
       <div>
-        <%- include('./story-tags/new.ejs') %>
+        <%- include('./post-tags/new.ejs') %>
       </div>
     <% } %>
   <% } %>
-  <div class="story-stat-item"><%= story.views %> <span class="material-icons">visibility</span></div>
-  <% if (story.openForComments === true) { %>
-    <div class="story-stat-item"><%= story.comments.length %> <span class="material-icons">comment</span></div>
+  <div class="post-stat-item"><%= post.views %> <span class="material-icons">visibility</span></div>
+  <% if (post.openForComments === true) { %>
+    <div class="post-stat-item"><%= post.comments.length %> <span class="material-icons">comment</span></div>
   <% } %>
-  <% if (story.openForRatings === true) { %>
-    <div class="story-stat-item"><span id="storyAverageRatingStat"><%= story.averageRating %></span> <span class="material-icons">star</span></div>
+  <% if (post.openForRatings === true) { %>
+    <div class="post-stat-item"><span id="postAverageRatingStat"><%= post.averageRating %></span> <span class="material-icons">star</span></div>
   <% } %>
 </div>
