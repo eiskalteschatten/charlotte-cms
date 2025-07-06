@@ -1,14 +1,14 @@
 import { CreationOptional, DataTypes } from 'sequelize';
 import { AllowNull, AutoIncrement, BelongsTo, Column, CreatedAt, ForeignKey, Model, PrimaryKey, Table, Unique, UpdatedAt } from 'sequelize-typescript';
 
-import { StoryComment as IStoryComment } from '@/interfaces/stories';
+import { PostRating as IPostRating } from '@/interfaces/posts';
 import User from './User';
-import Story from './Story';
+import Post from './Post';
 
 @Table({
-  tableName: 'story_comments',
+  tableName: 'post_ratings',
 })
-export default class StoryComment extends Model implements IStoryComment {
+export default class PostRating extends Model implements IPostRating {
   @AutoIncrement
   @PrimaryKey
   @Unique(true)
@@ -19,17 +19,17 @@ export default class StoryComment extends Model implements IStoryComment {
 
   @AllowNull(false)
   @Column
-  comment: string;
+  rating: number;
 
   @AllowNull(false)
-  @ForeignKey(() => Story)
+  @ForeignKey(() => Post)
   @Column({
-    field: 'fk_story',
+    field: 'fk_post',
   })
-  fkStory: number;
+  fkPost: number;
 
-  @BelongsTo(() => Story, 'fkStory')
-  story: Story;
+  @BelongsTo(() => Post, 'fkPost')
+  post: Post;
 
   @AllowNull(false)
   @ForeignKey(() => User)

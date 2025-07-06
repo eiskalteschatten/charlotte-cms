@@ -1,43 +1,40 @@
 import { User } from './users';
 
-export interface Story {
+export interface Post {
   id: number;
   title: string;
   content: string;
   shortDescription: string;
   openForComments: boolean;
   openForRatings: boolean;
-  noteToAdmin?: string;
-  status: StoryStatus;
-  isErotic: boolean;
-  submissionAgreement: boolean;
+  status: PostStatus;
   slug: string;
   views: number;
   publishedAt?: Date;
   fkUser: number;
   user: User;
-  categories: StoryCategory[];
-  tags: StoryTag[];
-  ratings: StoryRating[];
-  comments: StoryComment[];
+  categories: PostCategory[];
+  tags: PostTag[];
+  ratings: PostRating[];
+  comments: PostComment[];
   createdAt: Date;
   updatedAt: Date;
 }
 
-export interface StoryWithAverageRating extends Story {
+export interface PostWithAverageRating extends Post {
   averageRating: number;
 }
 
-export interface StoriesForIndexPage {
-  stories: StoryWithAverageRating[];
+export interface PostsForIndexPage {
+  posts: PostWithAverageRating[];
   totalPages: number;
 }
 
-export interface StoryForStoryPage extends StoryWithAverageRating {
-  renderedStory: string;
+export interface PostForPostPage extends PostWithAverageRating {
+  renderedPost: string;
 }
 
-export interface EditStory {
+export interface EditPost {
   id?: number;
   title: string;
   content: string;
@@ -46,26 +43,23 @@ export interface EditStory {
   categories: number[];
   openForComments: boolean;
   openForRatings: boolean;
-  noteToAdmin?: string;
   status: string;
   slug?: string;
-  isErotic: boolean;
-  submissionAgreement: boolean;
   publishedAt?: Date;
 }
 
-export interface StoryRating {
+export interface PostRating {
   id: number;
   rating: number;
-  fkStory: number;
-  story: Story;
+  fkPost: number;
+  post: Post;
   fkUser: number;
   user: User;
   createdAt: Date;
   updatedAt: Date;
 }
 
-export interface StoryTag {
+export interface PostTag {
   id: number;
   tag: string;
   slug: string;
@@ -73,11 +67,11 @@ export interface StoryTag {
   updatedAt: Date;
 }
 
-export interface StoryTagWithStoryCount extends StoryTag {
-  storyCount: number;
+export interface PostTagWithPostCount extends PostTag {
+  postCount: number;
 }
 
-export interface StoryCategory {
+export interface PostCategory {
   id: number;
   name: string;
   slug: string;
@@ -86,23 +80,22 @@ export interface StoryCategory {
   updatedAt: Date;
 }
 
-export interface StoryCategoryWithStoryCount extends StoryCategory {
-  storyCount: number;
+export interface PostCategoryWithPostCount extends PostCategory {
+  postCount: number;
 }
 
-export enum StoryStatus {
+export enum PostStatus {
   DRAFT = 'draft',
   PUBLISHED = 'published',
   INACTIVE = 'inactive',
   ARCHIVED = 'archived',
-  TAKEN_DOWN = 'taken_down',
 }
 
-export interface StoryComment {
+export interface PostComment {
   id: number;
   comment: string;
-  fkStory: number;
-  story: Story;
+  fkPost: number;
+  post: Post;
   fkUser: number;
   user: User;
   createdAt: Date;

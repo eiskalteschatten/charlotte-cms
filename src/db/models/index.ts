@@ -1,19 +1,19 @@
 import User from './User';
-import Story from './Story';
-import StoryRating from './StoryRating';
-import StoryCategory from './StoryCategory';
-import StoryCategoryMapper from './StoryCategoryMapper';
-import StoryTag from './StoryTag';
-import StoryTagMapper from './StoryTagMapper';
-import StoryComment from './StoryComment';
+import Post from './Post';
+import PostRating from './PostRating';
+import PostCategory from './PostCategory';
+import PostCategoryMapper from './PostCategoryMapper';
+import PostTag from './PostTag';
+import PostTagMapper from './PostTagMapper';
+import PostComment from './PostComment';
 
 export default [
   User,
-  Story,
-  StoryRating,
-  StoryCategory,
-  StoryCategoryMapper,
-  StoryTag,
-  StoryTagMapper,
-  StoryComment,
+  Post,
+  PostRating,
+  PostCategory,
+  PostCategoryMapper,
+  PostTag,
+  PostTagMapper,
+  PostComment,
 ];

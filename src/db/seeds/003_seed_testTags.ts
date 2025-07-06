@@ -25,14 +25,14 @@ export default {
       },
     ];
 
-    await query.bulkInsert('story_tags', tags.map(tag => ({
+    await query.bulkInsert('post_tags', tags.map(tag => ({
       ...tag,
       createdAt: new Date(),
       updatedAt: new Date(),
     })));
 
-    const allTags: any = await query.sequelize.query('SELECT id FROM story_tags', { type: 'SELECT' });
-    const stories: any = await query.sequelize.query('SELECT id FROM stories', { type: 'SELECT' });
+    const allTags: any = await query.sequelize.query('SELECT id FROM post_tags', { type: 'SELECT' });
+    const posts: any = await query.sequelize.query('SELECT id FROM posts', { type: 'SELECT' });
 
     const getRandomSubsetOfTags = () => {
       // Step 1: Shuffle the array using Fisher-Yates algorithm
@@ -48,11 +48,11 @@ export default {
       return allTags.slice(0, randomLength);
     };
 
-    for (const story of stories) {
+    for (const post of posts) {
       const randomTags = getRandomSubsetOfTags();
-      await query.bulkInsert('story_tag_mapper', randomTags.map((tag: any) => ({
-        fk_story: story.id,
-        fk_story_tag: tag.id,
+      await query.bulkInsert('post_tag_mapper', randomTags.map((tag: any) => ({
+        fk_post: post.id,
+        fk_post_tag: tag.id,
         createdAt: new Date(),
         updatedAt: new Date(),
       })));

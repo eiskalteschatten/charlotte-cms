@@ -1,14 +1,14 @@
 import { CreationOptional, DataTypes } from 'sequelize';
 import { AllowNull, AutoIncrement, BelongsToMany, Column, CreatedAt, Model, PrimaryKey, Table, Unique, UpdatedAt } from 'sequelize-typescript';
 
-import { StoryTag as IStoryTag } from '@/interfaces/stories';
-import Story from './Story';
-import StoryTagMapper from './StoryTagMapper';
+import { PostCategory as IPostCategory } from '@/interfaces/posts';
+import Post from './Post';
+import PostCategoryMapper from './PostCategoryMapper';
 
 @Table({
-  tableName: 'story_tags',
+  tableName: 'post_categories',
 })
-export default class StoryTag extends Model implements IStoryTag {
+export default class PostCategory extends Model implements IPostCategory {
   @AutoIncrement
   @PrimaryKey
   @Unique(true)
@@ -20,15 +20,18 @@ export default class StoryTag extends Model implements IStoryTag {
   @AllowNull(false)
   @Unique(true)
   @Column
-  tag: string;
+  name: string;
 
   @AllowNull(false)
   @Unique(true)
   @Column
   slug: string;
 
-  @BelongsToMany(() => Story, () => StoryTagMapper)
-  stories: Story[];
+  @Column
+  description: string;
+
+  @BelongsToMany(() => Post, () => PostCategoryMapper)
+  posts: Post[];
 
   @CreatedAt
   override createdAt: CreationOptional<Date>;

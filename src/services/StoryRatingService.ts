@@ -1,5 +1,5 @@
-import StoryRating from '@/db/models/StoryRating';
-import Story from '@/db/models/Story';
+import StoryRating from '@/db/models/PostRating';
+import Story from '@/db/models/Post';
 
 import RatingNotificationEmailService, { EmailData } from './email/RatingNotificationEmailService';
 

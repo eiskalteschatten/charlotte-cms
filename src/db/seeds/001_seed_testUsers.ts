@@ -12,7 +12,7 @@ export default {
         role: 'super_admin',
         bio: 'I am the creator of Charlotte CMS.',
         links: JSON.stringify({
-          website: 'https://tfstorytime.com',
+          website: 'https://www.alexseifert.com',
           twitter: 'https://www.twitter.com',
           instagram: 'https://www.instagram.com',
           facebook: 'https://www.facebook.com',
@@ -23,7 +23,7 @@ export default {
         updatedAt: new Date(),
       },
       {
-        email: 'liz@tfstorytime.com',
+        email: 'liz@alexseifert.com',
         username: 'liz',
         // This password is Test123$
         password: '$2a$12$c77H9TKQNwq29VfhWTGFuuCkTw4OUkNqKjo8nHdAaxqyxmjCDPPly',
@@ -31,7 +31,7 @@ export default {
         role: 'author',
         bio: 'I\'m another person.',
         links: JSON.stringify({
-          website: 'https://tfstorytime.com',
+          website: 'https://alexseifert.com',
           twitter: 'https://www.twitter.com',
           instagram: 'https://www.instagram.com',
           facebook: 'https://www.facebook.com',
@@ -41,7 +41,7 @@ export default {
         updatedAt: new Date(),
       },
       {
-        email: 'charlotte@tfstorytime.com',
+        email: 'charlotte@alexseifert.com',
         username: 'charlotte',
         // This password is Test123$
         password: '$2a$12$c77H9TKQNwq29VfhWTGFuuCkTw4OUkNqKjo8nHdAaxqyxmjCDPPly',
@@ -49,7 +49,7 @@ export default {
         role: 'moderator',
         bio: 'I was disabled.',
         links: JSON.stringify({
-          website: 'https://tfstorytime.com',
+          website: 'https://alexseifert.com',
           twitter: 'https://www.twitter.com',
           instagram: 'https://www.instagram.com',
           facebook: 'https://www.facebook.com',

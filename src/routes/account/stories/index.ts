@@ -1,9 +1,9 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
 
-import { EditStory } from '@/interfaces/stories';
+import { EditStory } from '@/interfaces/posts';
 import StoryService from '@/services/StoryService';
 import logger from '@/lib/logger';
-import Story from '@/db/models/Story';
+import Story from '@/db/models/Post';
 import StoryCategoryService from '@/services/StoryCategoryService';
 import StoryTagService from '@/services/StoryTagService';
 import StoryIndexPageService from '@/services/StoryIndexPageService';

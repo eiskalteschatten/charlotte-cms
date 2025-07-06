@@ -1,20 +1,20 @@
 import { CreationOptional, DataTypes } from 'sequelize';
 import { AllowNull, AutoIncrement, BelongsTo, BelongsToMany, Column, CreatedAt, Default, ForeignKey, HasMany, Model, PrimaryKey, Table, Unique, UpdatedAt } from 'sequelize-typescript';
 
-import { Story as IStory, StoryStatus } from '@/interfaces/stories';
+import { Post as IPost, PostStatus } from '@/interfaces/posts';
 
 import User from './User';
-import StoryRating from './StoryRating';
-import StoryTag from './StoryTag';
-import StoryTagMapper from './StoryTagMapper';
-import StoryComment from './StoryComment';
-import StoryCategory from './StoryCategory';
-import StoryCategoryMapper from './StoryCategoryMapper';
+import PostRating from './PostRating';
+import PostTag from './PostTag';
+import PostTagMapper from './PostTagMapper';
+import PostComment from './PostComment';
+import PostCategory from './PostCategory';
+import PostCategoryMapper from './PostCategoryMapper';
 
 @Table({
-  tableName: 'stories',
+  tableName: 'posts',
 })
-export default class Story extends Model implements IStory {
+export default class Post extends Model implements IPost {
   @AutoIncrement
   @PrimaryKey
   @Unique(true)
@@ -51,30 +51,10 @@ export default class Story extends Model implements IStory {
   })
   openForRatings: boolean;
 
-  @AllowNull(true)
-  @Column({
-    field: 'note_to_admin',
-  })
-  noteToAdmin: string;
-
   @AllowNull(false)
-  @Default(StoryStatus.DRAFT)
-  @Column(DataTypes.ENUM({ values: Object.values(StoryStatus) }))
-  status: StoryStatus;
-
-  @AllowNull(false)
-  @Default(false)
-  @Column({
-    field: 'is_erotic',
-  })
-  isErotic: boolean;
-
-  @AllowNull(false)
-  @Default(false)
-  @Column({
-    field: 'submission_agreement',
-  })
-  submissionAgreement: boolean;
+  @Default(PostStatus.DRAFT)
+  @Column(DataTypes.ENUM({ values: Object.values(PostStatus) }))
+  status: PostStatus;
 
   @AllowNull(false)
   @Unique(true)
@@ -102,17 +82,17 @@ export default class Story extends Model implements IStory {
   @BelongsTo(() => User, 'fkUser')
   user: User;
 
-  @HasMany(() => StoryRating, 'fkStory')
-  ratings: StoryRating[];
+  @HasMany(() => PostRating, 'fkPost')
+  ratings: PostRating[];
 
-  @BelongsToMany(() => StoryCategory, () => StoryCategoryMapper)
-  categories: StoryCategory[];
+  @BelongsToMany(() => PostCategory, () => PostCategoryMapper)
+  categories: PostCategory[];
 
-  @BelongsToMany(() => StoryTag, () => StoryTagMapper)
-  tags: StoryTag[];
+  @BelongsToMany(() => PostTag, () => PostTagMapper)
+  tags: PostTag[];
 
-  @HasMany(() => StoryComment, 'fkStory')
-  comments: StoryComment[];
+  @HasMany(() => PostComment, 'fkPost')
+  comments: PostComment[];
 
   @CreatedAt
   override createdAt: CreationOptional<Date>;

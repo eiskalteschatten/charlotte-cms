@@ -1,14 +1,14 @@
 import { CreationOptional, DataTypes } from 'sequelize';
 import { AllowNull, AutoIncrement, BelongsTo, Column, CreatedAt, ForeignKey, Model, PrimaryKey, Table, Unique, UpdatedAt } from 'sequelize-typescript';
 
-import Story from './Story';
-import StoryTag from './StoryTag';
+import Post from './Post';
+import PostTag from './PostTag';
 
 @Table({
-  tableName: 'story_tag_mapper',
+  tableName: 'post_tag_mapper',
   freezeTableName: true,
 })
-export default class StoryTagMapper extends Model {
+export default class PostTagMapper extends Model {
   @AutoIncrement
   @PrimaryKey
   @Unique(true)
@@ -18,21 +18,21 @@ export default class StoryTagMapper extends Model {
   override id: CreationOptional<number>;
 
   @AllowNull(false)
-  @ForeignKey(() => Story)
+  @ForeignKey(() => Post)
   @Column({
-    field: 'fk_story',
+    field: 'fk_post',
   })
-  fkStory: number;
+  fkPost: number;
 
-  @BelongsTo(() => Story, 'fkStory')
-  story: Story;
+  @BelongsTo(() => Post, 'fkPost')
+  post: Post;
 
   @AllowNull(false)
-  @ForeignKey(() => StoryTag)
+  @ForeignKey(() => PostTag)
   @Column({
-    field: 'fk_story_tag',
+    field: 'fk_post_tag',
   })
-  fkStoryTag: number;
+  fkPostTag: number;
 
   @CreatedAt
   override createdAt: CreationOptional<Date>;

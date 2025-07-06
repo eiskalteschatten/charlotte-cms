@@ -1,8 +1,8 @@
 import { Op, Sequelize, Transaction } from 'sequelize';
 
-import StoryTag from '@/db/models/StoryTag';
+import StoryTag from '@/db/models/PostTag';
 import { getSlugFromString } from '@/lib/helpers';
-import { StoryTagWithStoryCount } from '@/interfaces/stories';
+import { StoryTagWithStoryCount } from '@/interfaces/posts';
 
 export default class StoryTagService {
   async getTagsForIndexPage(limit?: number): Promise<StoryTagWithStoryCount[]> {

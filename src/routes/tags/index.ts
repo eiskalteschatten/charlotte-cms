@@ -2,7 +2,7 @@ import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
 
 import StoryTagService from '@/services/StoryTagService';
 import StoryCategoryService from '@/services/StoryCategoryService';
-import { StoriesForIndexPage } from '@/interfaces/stories';
+import { StoriesForIndexPage } from '@/interfaces/posts';
 import { getSlugFromString } from '@/lib/helpers';
 import StoryIndexPageService from '@/services/StoryIndexPageService';
 import { FrontendScript } from '@/interfaces/routes';

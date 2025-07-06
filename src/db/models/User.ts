@@ -2,8 +2,8 @@ import { CreationOptional, DataTypes } from 'sequelize';
 import { AllowNull, AutoIncrement, Column, CreatedAt, Default, HasMany, Model, PrimaryKey, Table, Unique, UpdatedAt } from 'sequelize-typescript';
 
 import { User as IUser, UserLinks, UserRole, UserStatus } from '@/interfaces/users';
-import Story from './Story';
-import StoryRating from './StoryRating';
+import Post from './Post';
+import PostRating from './PostRating';
 
 @Table({
   tableName: 'users',
@@ -57,11 +57,11 @@ export default class User extends Model implements IUser {
   })
   links?: UserLinks;
 
-  @HasMany(() => Story, 'fkUser')
-  stories: Story[];
+  @HasMany(() => Post, 'fkUser')
+  posts: Post[];
 
-  @HasMany(() => StoryRating, 'fkUser')
-  ratings: StoryRating[];
+  @HasMany(() => PostRating, 'fkUser')
+  ratings: PostRating[];
 
   @CreatedAt
   override createdAt: CreationOptional<Date>;

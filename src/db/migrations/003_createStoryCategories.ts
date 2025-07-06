@@ -3,7 +3,7 @@ import { QueryInterface, DataTypes as DataTypesNamespace } from 'sequelize';
 export default {
   up: async (query: QueryInterface, DataTypes: typeof DataTypesNamespace): Promise<void> => {
     try {
-      const tableDesc = await query.describeTable('story_categories');
+      const tableDesc = await query.describeTable('post_categories');
       if (tableDesc['id']) return Promise.resolve();
     }
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -12,7 +12,7 @@ export default {
       // created later
     }
 
-    await query.createTable('story_categories', {
+    await query.createTable('post_categories', {
       id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
@@ -36,24 +36,24 @@ export default {
       updatedAt: DataTypes.DATE,
     });
 
-    await query.createTable('story_category_mapper', {
+    await query.createTable('post_category_mapper', {
       id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true,
         unique: true,
       },
-      fkStory: {
+      fkPost: {
         type: new DataTypes.INTEGER,
         allowNull: false,
-        field: 'fk_story',
-        references: { model: 'stories', key: 'id' },
+        field: 'fk_post',
+        references: { model: 'posts', key: 'id' },
       },
-      fkStoryCAtegory: {
+      fkPostCategory: {
         type: new DataTypes.INTEGER,
         allowNull: false,
-        field: 'fk_story_category',
-        references: { model: 'story_categories', key: 'id' },
+        field: 'fk_post_category',
+        references: { model: 'post_categories', key: 'id' },
       },
       createdAt: DataTypes.DATE,
       updatedAt: DataTypes.DATE,
@@ -67,7 +67,7 @@ export default {
       ['Operating Systems', 'operating-systems', 'Operating System-related posts.'],
     ];
 
-    await query.bulkInsert('story_categories', categories.map(([name, slug, description]) => ({
+    await query.bulkInsert('post_categories', categories.map(([name, slug, description]) => ({
       name,
       slug,
       description,
@@ -77,7 +77,7 @@ export default {
   },
 
   down: async (query: QueryInterface): Promise<void> => {
-    await query.dropTable('story_category_mapper');
-    await query.dropTable('story_categories');
+    await query.dropTable('post_category_mapper');
+    await query.dropTable('post_categories');
   },
 };

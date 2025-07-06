@@ -1,9 +1,9 @@
 import { Sequelize, Transaction } from 'sequelize';
 
-import StoryCategory from '@/db/models/StoryCategory';
-import Story from '@/db/models/Story';
-import StoryCategoryMapper from '@/db/models/StoryCategoryMapper';
-import { StoryCategoryWithStoryCount } from '@/interfaces/stories';
+import StoryCategory from '@/db/models/PostCategory';
+import Story from '@/db/models/Post';
+import StoryCategoryMapper from '@/db/models/PostCategoryMapper';
+import { StoryCategoryWithStoryCount } from '@/interfaces/posts';
 
 export default class StoryCategoryService {
   async getCategoriesForEditStoryPage(): Promise<StoryCategory[]> {

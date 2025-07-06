@@ -1,4 +1,4 @@
-import { Story } from './stories';
+import { Post } from './posts';
 
 export interface User {
   id: number;
@@ -9,7 +9,7 @@ export interface User {
   verificationCode: string;
   bio?: string;
   links?: UserLinks;
-  stories: Story[];
+  posts: Post[];
   createdAt: Date;
   updatedAt: Date;
 }

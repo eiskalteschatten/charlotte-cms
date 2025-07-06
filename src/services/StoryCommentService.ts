@@ -1,5 +1,5 @@
-import Story from '@/db/models/Story';
-import StoryComment from '@/db/models/StoryComment';
+import Story from '@/db/models/Post';
+import StoryComment from '@/db/models/PostComment';
 
 import CommentNotificationEmailService, { EmailData } from './email/CommentNotificationEmailService';
 

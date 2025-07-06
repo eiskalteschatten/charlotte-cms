@@ -3,20 +3,20 @@ import { QueryInterface, DataTypes as DataTypesNamespace } from 'sequelize';
 export default {
   up: async (query: QueryInterface, DataTypes: typeof DataTypesNamespace): Promise<void> => {
     try {
-      const storiesTable = await query.describeTable('stories');
-      if (storiesTable['id']) return Promise.resolve();
+      const postsTable = await query.describeTable('posts');
+      if (postsTable['id']) return Promise.resolve();
 
-      const storyRatingsTable = await query.describeTable('story_ratings');
-      if (storyRatingsTable['id']) return Promise.resolve();
+      const postRatingsTable = await query.describeTable('post_ratings');
+      if (postRatingsTable['id']) return Promise.resolve();
 
-      const storyTagsTable = await query.describeTable('story_tags');
-      if (storyTagsTable['id']) return Promise.resolve();
+      const postTagsTable = await query.describeTable('post_tags');
+      if (postTagsTable['id']) return Promise.resolve();
 
-      const storyTagMapperTable = await query.describeTable('story_tag_mapper');
-      if (storyTagMapperTable['id']) return Promise.resolve();
+      const postTagMapperTable = await query.describeTable('post_tag_mapper');
+      if (postTagMapperTable['id']) return Promise.resolve();
 
-      const storyCommentsTable = await query.describeTable('story_comments');
-      if (storyCommentsTable['id']) return Promise.resolve();
+      const postCommentsTable = await query.describeTable('post_comments');
+      if (postCommentsTable['id']) return Promise.resolve();
     }
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     catch (error) {
@@ -24,7 +24,7 @@ export default {
       // created later
     }
 
-    await query.createTable('stories', {
+    await query.createTable('posts', {
       id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
@@ -56,27 +56,10 @@ export default {
         defaultValue: true,
         field: 'open_for_ratings',
       },
-      noteToAdmin: {
-        type: new DataTypes.STRING,
-        allowNull: true,
-        field: 'note_to_admin',
-      },
       status: {
-        type: DataTypes.ENUM('draft', 'published', 'inactive', 'archived', 'taken_down'),
+        type: DataTypes.ENUM('draft', 'published', 'inactive', 'archived'),
         allowNull: false,
         defaultValue: 'draft',
-      },
-      isErotic: {
-        type: new DataTypes.BOOLEAN,
-        allowNull: false,
-        defaultValue: false,
-        field: 'is_erotic',
-      },
-      submissionAgreement: {
-        type: new DataTypes.BOOLEAN,
-        allowNull: false,
-        defaultValue: false,
-        field: 'submission_agreement',
       },
       slug: {
         type: new DataTypes.STRING,
@@ -103,7 +86,7 @@ export default {
       updatedAt: DataTypes.DATE,
     });
 
-    await query.createTable('story_ratings', {
+    await query.createTable('post_ratings', {
       id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
@@ -114,11 +97,11 @@ export default {
         type: new DataTypes.INTEGER,
         allowNull: false,
       },
-      fkStory: {
+      fkPost: {
         type: new DataTypes.INTEGER,
         allowNull: false,
-        field: 'fk_story',
-        references: { model: 'stories', key: 'id' },
+        field: 'fk_post',
+        references: { model: 'posts', key: 'id' },
       },
       fkUser: {
         type: new DataTypes.INTEGER,
@@ -130,7 +113,7 @@ export default {
       updatedAt: DataTypes.DATE,
     });
 
-    await query.createTable('story_tags', {
+    await query.createTable('post_tags', {
       id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
@@ -151,30 +134,30 @@ export default {
       updatedAt: DataTypes.DATE,
     });
 
-    await query.createTable('story_tag_mapper', {
+    await query.createTable('post_tag_mapper', {
       id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true,
         unique: true,
       },
-      fkStory: {
+      fkPost: {
         type: new DataTypes.INTEGER,
         allowNull: false,
-        field: 'fk_story',
-        references: { model: 'stories', key: 'id' },
+        field: 'fk_post',
+        references: { model: 'posts', key: 'id' },
       },
-      fkStoryTag: {
+      fkPostTag: {
         type: new DataTypes.INTEGER,
         allowNull: false,
-        field: 'fk_story_tag',
-        references: { model: 'story_tags', key: 'id' },
+        field: 'fk_post_tag',
+        references: { model: 'post_tags', key: 'id' },
       },
       createdAt: DataTypes.DATE,
       updatedAt: DataTypes.DATE,
     });
 
-    await query.createTable('story_comments', {
+    await query.createTable('post_comments', {
       id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
@@ -185,11 +168,11 @@ export default {
         type: new DataTypes.STRING,
         allowNull: false,
       },
-      fkStory: {
+      fkPost: {
         type: new DataTypes.INTEGER,
         allowNull: false,
-        field: 'fk_story',
-        references: { model: 'stories', key: 'id' },
+        field: 'fk_post',
+        references: { model: 'posts', key: 'id' },
       },
       fkUser: {
         type: new DataTypes.INTEGER,
@@ -203,10 +186,10 @@ export default {
   },
 
   down: async (query: QueryInterface): Promise<void> => {
-    await query.dropTable('stories');
-    await query.dropTable('story_ratings');
-    await query.dropTable('story_tags');
-    await query.dropTable('story_tag_mapper');
-    await query.dropTable('story_comments');
+    await query.dropTable('posts');
+    await query.dropTable('post_ratings');
+    await query.dropTable('post_tags');
+    await query.dropTable('post_tag_mapper');
+    await query.dropTable('post_comments');
   },
 };

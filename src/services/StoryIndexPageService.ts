@@ -1,12 +1,12 @@
 import { WhereOptions } from 'sequelize';
 
-import Story from '@/db/models/Story';
-import StoryTag from '@/db/models/StoryTag';
-import StoryComment from '@/db/models/StoryComment';
-import StoryRating from '@/db/models/StoryRating';
-import StoryCategory from '@/db/models/StoryCategory';
+import Story from '@/db/models/Post';
+import StoryTag from '@/db/models/PostTag';
+import StoryComment from '@/db/models/PostComment';
+import StoryRating from '@/db/models/PostRating';
+import StoryCategory from '@/db/models/PostCategory';
 import User from '@/db/models/User';
-import { StoriesForIndexPage, StoryStatus } from '@/interfaces/stories';
+import { StoriesForIndexPage, StoryStatus } from '@/interfaces/posts';
 
 import StoryRatingService from './StoryRatingService';
 
