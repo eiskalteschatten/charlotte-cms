@@ -1,17 +1,17 @@
 @use "variables";
 @use "mixins";
 
-.story-list {
+.post-list {
   display: flex;
   flex-direction: column;
   gap: 15px;
 
-  .story-block {
+  .post-block {
     display: flex;
     flex-direction: column;
     gap: 5px;
 
-    .story-title {
+    .post-title {
       color: var(--color);
       font-size: 1.25em;
       font-weight: 600;
@@ -21,22 +21,22 @@
       }
     }
 
-    .story-action-button {
+    .post-action-button {
       font-size: .9em;
     }
 
-    .story-description-wrapper {
+    .post-description-wrapper {
       display: flex;
       gap: 5px;
       align-items: center;
 
-      .story-description {
+      .post-description {
         font-size: .85em;
         opacity: .9;
       }
     }
 
-    .story-author-wrapper {
+    .post-author-wrapper {
       display: flex;
       gap: 5px;
       align-items: center;
@@ -45,13 +45,13 @@
       opacity: .9;
     }
 
-    .story-categories {
+    .post-categories {
       font-size: .8em;
     }
   }
 }
 
-.story-tag {
+.post-tag {
   font-size: 11px;
   padding: 0 4px;
   border-radius: 2px;
@@ -69,7 +69,7 @@
   }
 }
 
-.story-stats {
+.post-stats {
   font-size: .7em;
   opacity: .8;
   display: flex;
@@ -77,14 +77,14 @@
   user-select: none;
   align-items: center;
 
-  .story-stat-item {
+  .post-stat-item {
     display: flex;
     gap: 5px;
     align-items: center;
   }
 }
 
-.story-ratings {
+.post-ratings {
   [data-logged-in="true"] {
     .rating-star {
       cursor: pointer;
@@ -112,7 +112,7 @@
   }
 }
 
-.story-comments {
+.post-comments {
   .comment {
     .comment-date {
       font-size: .8em;

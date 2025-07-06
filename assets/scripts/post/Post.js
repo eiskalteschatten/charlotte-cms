@@ -1,48 +1,48 @@
 import { Toast } from '../lib/toast';
 
-class Story {
-  storyElement = document.getElementById('story');
+class Post {
+  postElement = document.getElementById('post');
   ratingStars = document.querySelectorAll('.rating-star');
-  storyRatingStars = document.getElementById('storyRatingStars');
+  postRatingStars = document.getElementById('postRatingStars');
 
   constructor() {
-    this.addViewToStory();
-    const userLoggedIn = this.storyRatingStars.dataset.loggedIn === 'true';
+    this.addViewToPost();
+    const userLoggedIn = this.postRatingStars.dataset.loggedIn === 'true';
 
     if (userLoggedIn) {
       this.ratingStars.forEach(star => {
         star.addEventListener('click', async () => {
           const rating = star.dataset.rating;
-          await this.addRatingToStory(rating);
+          await this.addRatingToPost(rating);
         });
 
         star.addEventListener('mouseenter', () => this.mouseOverRatingStar(star.dataset.rating));
       });
 
-      this.storyRatingStars.addEventListener('mouseleave', () => this.mouseOutRatingStar());
+      this.postRatingStars.addEventListener('mouseleave', () => this.mouseOutRatingStar());
     }
   }
 
-  async addViewToStory() {
-    await fetch(`/stories/views/update`, {
+  async addViewToPost() {
+    await fetch(`/posts/views/update`, {
       method: 'put',
       headers: new Headers({ 'content-type': 'application/json' }),
       body: JSON.stringify({
-        storyId: Number(this.storyElement.dataset.id),
+        postId: Number(this.postElement.dataset.id),
       })
     });
   }
 
-  async addRatingToStory(rating) {
+  async addRatingToPost(rating) {
     const toast = new Toast();
 
     try {
-      const response = await fetch(`/stories/ratings/add`, {
+      const response = await fetch(`/posts/ratings/add`, {
         method: 'post',
         headers: new Headers({ 'content-type': 'application/json' }),
         body: JSON.stringify({
           rating: Number(rating),
-          storyId: Number(this.storyElement.dataset.id),
+          postId: Number(this.postElement.dataset.id),
         })
       });
 
@@ -52,8 +52,8 @@ class Story {
 
       const { averageRating } = await response.json();
 
-      const storyAverageRatingStat = document.getElementById('storyAverageRatingStat');
-      storyAverageRatingStat.textContent = averageRating;
+      const postAverageRatingStat = document.getElementById('postAverageRatingStat');
+      postAverageRatingStat.textContent = averageRating;
 
       this.ratingStars.forEach(star => {
         const rating = Number(star.dataset.rating) - 0.5;
@@ -90,4 +90,4 @@ class Story {
   }
 }
 
-new Story();
+new Post();

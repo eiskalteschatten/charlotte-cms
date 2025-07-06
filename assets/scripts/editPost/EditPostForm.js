@@ -1,45 +1,45 @@
 import { Toast } from '../lib/toast';
 
-class EditStoryForm {
-  saveStoryButton = document.getElementById('saveStoryButton');
-  deleteStoryButton = document.getElementById('deleteStoryButton');
-  previewStoryButton = document.getElementById('previewStoryButton');
-  storyStatus = document.getElementById('status');
-  storyEditor = document.getElementById('storyEditor');
+class EditPostForm {
+  savePostButton = document.getElementById('savePostButton');
+  deletePostButton = document.getElementById('deletePostButton');
+  previewPostButton = document.getElementById('previewPostButton');
+  postStatus = document.getElementById('status');
+  postEditor = document.getElementById('postEditor');
   tags = [];
   postIsEdited = false;
-  minStoryWordCount = 750;
+  minPostWordCount = 750;
 
   constructor() {
-    this.storyStatus?.addEventListener('change', e => {
+    this.postStatus?.addEventListener('change', e => {
       const submissionAgreement = document.getElementById('submissionAgreementWrapper');
 
       if (e.target.value === 'published') {
         submissionAgreement.classList.remove('d-none');
-        this.saveStoryButton.textContent = 'Publish Story';
+        this.savePostButton.textContent = 'Publish Post';
       }
       else {
         submissionAgreement.classList.add('d-none');
-        this.saveStoryButton.textContent = 'Save as Draft';
+        this.savePostButton.textContent = 'Save as Draft';
       }
 
       this.setPostIsEdited(true);
     });
 
-    this.storyEditor?.addEventListener('input', () => {
+    this.postEditor?.addEventListener('input', () => {
       this.updateWordCount();
     });
 
     this.updateWordCount();
 
-    this.saveStoryButton?.addEventListener('click', e => {
+    this.savePostButton?.addEventListener('click', e => {
       e.preventDefault();
-      this.saveStory();
+      this.savePost();
     });
 
-    this.deleteStoryButton?.addEventListener('click', e => {
+    this.deletePostButton?.addEventListener('click', e => {
       e.preventDefault();
-      this.confirmDeleteStory();
+      this.confirmDeletePost();
     });
 
     const tagInput = document.getElementById('tags');
@@ -78,7 +78,7 @@ class EditStoryForm {
   }
 
   async fetchTags() {
-    const response = await fetch('/account/stories/edit/tags');
+    const response = await fetch('/account/posts/edit/tags');
     this.tags = await response.json();
   }
 
@@ -131,7 +131,7 @@ class EditStoryForm {
     tagsAutoSuggest.classList.remove('open');
   }
 
-  async saveStory() {
+  async savePost() {
     const formIsValid = this.validateForm();
 
     if (!formIsValid) {
@@ -139,22 +139,22 @@ class EditStoryForm {
     }
 
     // Check for Safari
-    if (this.saveStoryButton.showLoader) {
-      this.saveStoryButton.showLoader();
+    if (this.savePostButton.showLoader) {
+      this.savePostButton.showLoader();
     }
 
     try {
-      const status = this.storyStatus.value;
+      const status = this.postStatus.value;
       const id = document.getElementById('id').value;
 
-      const response = await fetch('/account/stories/save', {
+      const response = await fetch('/account/posts/save', {
         method: 'post',
         headers: new Headers({ 'content-type': 'application/json' }),
         body: JSON.stringify({
           id,
           title: document.getElementById('title').value,
           shortDescription: document.getElementById('shortDescription').value,
-          content: this.storyEditor.value,
+          content: this.postEditor.value,
           tags: document.getElementById('tags').value,
           categories: this.selectedCategories,
           noteToAdmin: document.getElementById('noteToAdmin').value,
@@ -169,21 +169,21 @@ class EditStoryForm {
       const toast = new Toast();
 
       if (response?.ok) {
-        const successMessage = status === 'published' ? 'Story published successfully.' : 'Story saved as draft.';
+        const successMessage = status === 'published' ? 'Post published successfully.' : 'Post saved as draft.';
         toast.show(successMessage, 'success');
 
         this.setPostIsEdited(false);
 
         if (!id) {
-          const story = await response.json();
-          window.location.href = `/account/stories/edit/${story.id}`;
+          const post = await response.json();
+          window.location.href = `/account/posts/edit/${post.id}`;
         }
         else {
-          this.previewStoryButton.textContent = status === 'published' ? 'View Story' : 'Preview Story';
+          this.previewPostButton.textContent = status === 'published' ? 'View Post' : 'Preview Post';
         }
       }
       else {
-        toast.show('Failed to save story. Please try again.', 'error');
+        toast.show('Failed to save post. Please try again.', 'error');
       }
     }
     catch (error) {
@@ -192,23 +192,23 @@ class EditStoryForm {
     }
     finally {
       // Check for Safari
-      if (this.saveStoryButton.hideLoader) {
-        this.saveStoryButton.hideLoader();
+      if (this.savePostButton.hideLoader) {
+        this.savePostButton.hideLoader();
       }
     }
   }
 
   validateForm() {
-    const form = document.getElementById('editStoryForm');
+    const form = document.getElementById('editPostForm');
     let isValid = form.checkValidity();
     form.reportValidity();
 
     const wordCount = this.updateWordCount();
 
-    if (wordCount < this.minStoryWordCount) {
+    if (wordCount < this.minPostWordCount) {
       isValid = false;
       const toast = new Toast();
-      toast.show(`Your story must have at least ${this.minStoryWordCount} words.`, 'error');
+      toast.show(`Your post must have at least ${this.minPostWordCount} words.`, 'error');
       return;
     }
 
@@ -229,24 +229,24 @@ class EditStoryForm {
     return isValid;
   }
 
-  async confirmDeleteStory() {
-    const confirmDeleteStory = confirm('Are you sure you want to delete this story? This cannot be undone.');
+  async confirmDeletePost() {
+    const confirmDeletePost = confirm('Are you sure you want to delete this post? This cannot be undone.');
 
-    if (confirmDeleteStory) {
-      await this.deleteStory();
+    if (confirmDeletePost) {
+      await this.deletePost();
     }
   }
 
-  async deleteStory() {
+  async deletePost() {
     // Check for Safari
-    if (this.deleteStoryButton.showLoader) {
-      this.deleteStoryButton.showLoader();
+    if (this.deletePostButton.showLoader) {
+      this.deletePostButton.showLoader();
     }
 
     try {
       const id = document.getElementById('id').value;
 
-      const response = await fetch(`/account/stories/delete/${id}`, {
+      const response = await fetch(`/account/posts/delete/${id}`, {
         method: 'delete',
       });
 
@@ -254,10 +254,10 @@ class EditStoryForm {
 
       if (response?.ok) {
         this.setPostIsEdited(false);
-        window.location.href = '/account/stories/';
+        window.location.href = '/account/posts/';
       }
       else {
-        toast.show('Failed to delete story. Please try again.', 'error');
+        toast.show('Failed to delete post. Please try again.', 'error');
       }
     }
     catch (error) {
@@ -266,8 +266,8 @@ class EditStoryForm {
     }
     finally {
       // Check for Safari
-      if (this.deleteStoryButton.hideLoader) {
-        this.deleteStoryButton.hideLoader();
+      if (this.deletePostButton.hideLoader) {
+        this.deletePostButton.hideLoader();
       }
     }
   }
@@ -279,7 +279,7 @@ class EditStoryForm {
 
   updateWordCount() {
     const wordCountDisplay = document.getElementById('wordCount');
-    const text = this.storyEditor?.value.trim();
+    const text = this.postEditor?.value.trim();
     const wordCount = text ? text.split(/\s+/).filter(word => word.length > 0).length : 0;
 
     wordCountDisplay.textContent = wordCount;
@@ -287,4 +287,4 @@ class EditStoryForm {
   }
 }
 
-new EditStoryForm();
+new EditPostForm();

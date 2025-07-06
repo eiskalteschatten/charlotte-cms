@@ -1,11 +1,11 @@
 @use "../../mixins";
 
-.edit-story-field-required {
+.edit-post-field-required {
   font-size: .9em;
   font-style: italic;
 }
 
-.edit-story-categories {
+.edit-post-categories {
   height: 210px;
   overflow: auto;
   background-color: var(--background-secondary-color);
