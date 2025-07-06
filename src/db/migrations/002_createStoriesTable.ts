@@ -40,7 +40,7 @@ export default {
         allowNull: false,
       },
       shortDescription: {
-        type: new DataTypes.STRING,
+        type: new DataTypes.TEXT,
         allowNull: false,
         field: 'short_description',
       },

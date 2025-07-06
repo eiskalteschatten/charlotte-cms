@@ -34,6 +34,7 @@ export default class Post extends Model implements IPost {
   @AllowNull(false)
   @Column({
     field: 'short_description',
+    type: DataTypes.TEXT,
   })
   shortDescription: string;
 
