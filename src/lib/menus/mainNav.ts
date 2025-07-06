@@ -12,8 +12,8 @@ const mainNav: MainNavItem[] = [
   },
   {
     id: 'browse',
-    label: 'Browse Stories',
-    url: '/stories/',
+    label: 'Browse Posts',
+    url: '/posts/',
   },
   {
     id: 'categories',

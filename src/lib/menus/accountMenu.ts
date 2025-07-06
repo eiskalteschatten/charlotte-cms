@@ -22,9 +22,9 @@ const accountMenu: AccountMenuItem[] = [
     url: '/account/profile/',
   },
   {
-    id: 'myStories',
-    label: 'My Stories',
-    url: '/account/stories/',
+    id: 'myPosts',
+    label: 'My Posts',
+    url: '/account/posts/',
   },
   {
     id: 'myRatingsAndComments',
