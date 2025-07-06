@@ -1,0 +1,15 @@
+services:
+  db:
+    image: mariadb:10
+    volumes:
+      - "charlottecms_mariadb_data:/var/lib/mysql"
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=charlottecms
+      - MYSQL_DATABASE=charlottecms
+      - MYSQL_USER=charlottecms
+      - MYSQL_PASSWORD=charlottecms
+
+volumes:
+  charlottecms_mariadb_data:
