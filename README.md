@@ -1,4 +1,4 @@
-# TF Labs
+# Charlotte CMS
 
 To start locally for development:
 
